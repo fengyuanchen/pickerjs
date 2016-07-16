@@ -1,0 +1,9 @@
+archives
+docs
+node_modules
+resources
+site
+test
+*.map
+/.*
+gulpfile.js
