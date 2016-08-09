@@ -36,11 +36,12 @@ dist/
 
 ### Quick start
 
-Three quick start options are available:
+Four quick start options are available:
 
 - [Download the latest release](https://github.com/fengyuanchen/pickerjs/archive/master.zip).
 - Clone the repository: `git clone https://github.com/fengyuanchen/pickerjs.git`.
 - Install with [NPM](https://npmjs.com): `npm install pickerjs`.
+- Install with [Bower](https://bower.io): `bower install pickerjs`.
 
 
 ### Installation
@@ -58,7 +59,7 @@ Include files:
 Initialize with `Picker` constructor:
 
 - Browser: `window.Picker`
-- CommonJS: `const Picker = require('picker')`
+- CommonJS: `const Picker = require('pickerjs')`
 
 ```js
 const picker = new Picker(element, options);
