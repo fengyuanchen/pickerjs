@@ -5,7 +5,7 @@
  * Copyright (c) 2016 Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2016-07-16T12:44:36.898Z
+ * Date: 2016-10-21T13:17:02.772Z
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -523,7 +523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	exports.typeOf = typeOf;
 	exports.isObject = isObject;
@@ -789,7 +789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function addLeadingZero(value) {
-	  var length = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+	  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 	
 	  var str = String(Math.abs(value));
 	  var i = str.length;
@@ -1157,7 +1157,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	  // Show the picker.
-	
 	  show: function show() {
 	    var self = this;
 	    var element = self.element;
@@ -1243,7 +1242,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var value = Number($.getData(list.firstElementChild, 'value')) - data.increment;
 	
 	    if (value < min) {
-	      value = max;
+	      if (data.increment > 1) {
+	        value = max + 1;
+	        value = value - data.increment;
+	      } else {
+	        value = max;
+	      }
 	    } else if (value > max) {
 	      value = min;
 	    }

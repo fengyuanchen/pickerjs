@@ -30,6 +30,6 @@
     "tests",
     "test",
     "docs",
-    "gulpfile.js",
+    "gulpfile.js"
   ]
 }

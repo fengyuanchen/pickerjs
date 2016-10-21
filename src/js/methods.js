@@ -85,7 +85,12 @@ export default {
     let value = Number($.getData(list.firstElementChild, 'value')) - data.increment;
 
     if (value < min) {
-      value = max;
+      if (data.increment > 1) {
+        value = max + 1;
+        value = value - data.increment;
+      } else {
+        value = max;
+      }
     } else if (value > max) {
       value = min;
     }
