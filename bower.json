@@ -18,10 +18,9 @@
     "web",
     "development"
   ],
-  "homepage": "https://github.com/jasofree/pickerjs",
+  "homepage": "https://github.com/fengyuanchen/pickerjs",
   "authors": [
-    "Fengyuan Chen",
-    "José Antonio Sánchez Ortiz"
+    "Fengyuan Chen"
   ],
   "license": "MIT",
   "ignore": [
