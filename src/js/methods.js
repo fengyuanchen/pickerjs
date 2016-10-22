@@ -85,9 +85,7 @@ export default {
     let value = Number($.getData(list.firstElementChild, 'value')) - data.increment;
 
     if (value < min) {
-      value = max;
-    } else if (value > max) {
-      value = min;
+      value += (max - min) + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
@@ -130,10 +128,8 @@ export default {
     const next = data.item.nextElementSibling;
     let value = Number($.getData(list.lastElementChild, 'value')) + data.increment;
 
-    if (value < min) {
-      value = max;
-    } else if (value > max) {
-      value = min;
+    if (value > max) {
+      value -= (max - min) + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
