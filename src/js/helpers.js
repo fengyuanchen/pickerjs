@@ -29,7 +29,7 @@ export default {
       let newValue = current + (position * data.increment);
 
       if (base) {
-        newValue = newValue % base;
+        newValue %= base;
 
         if (newValue < min) {
           newValue += base;

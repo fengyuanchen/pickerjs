@@ -203,15 +203,12 @@ export function dispatchEvent(element, type, data) {
         cancelable: true,
       });
     }
+  } else if (data === undefined) {
+    event = document.createEvent('Event');
+    event.initEvent(type, true, true);
   } else {
-    // IE9-11
-    if (data === undefined) {
-      event = document.createEvent('Event');
-      event.initEvent(type, true, true);
-    } else {
-      event = document.createEvent('CustomEvent');
-      event.initCustomEvent(type, true, true, data);
-    }
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent(type, true, true, data);
   }
 
   // IE9+

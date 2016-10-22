@@ -44,6 +44,6 @@ window.QUnit.test('events#hide: default prevented', (assert) => {
     },
   });
 
-  input.addEventListener('hide', (e) => e.preventDefault(), false);
+  input.addEventListener('hide', e => e.preventDefault(), false);
   picker.show();
 });
