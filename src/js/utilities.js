@@ -59,13 +59,15 @@ export function extend(...args) {
     args.shift();
 
     args.forEach((arg) => {
-      Object.keys(arg).forEach((key) => {
-        if (deep && isPlainObject(data[key])) {
-          extend(true, data[key], arg[key]);
-        } else {
-          data[key] = arg[key];
-        }
-      });
+      if (isObject(arg)) {
+        Object.keys(arg).forEach((key) => {
+          if (deep && isObject(data[key])) {
+            extend(true, data[key], arg[key]);
+          } else {
+            data[key] = arg[key];
+          }
+        });
+      }
     });
   }
 
