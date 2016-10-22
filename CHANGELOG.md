@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.1.1 (Oct 22, 2016)
+
+- Fixed the issue of increment and decrement (#1).
+
+
 ## 0.1.0 (Jul 16, 2016)
 
 - Supports 16 options: `container`, `date`, `format`, `increment`, `inline`, `language`, `months`, `monthsShort`, `translate`, `rows`, `text`, `show`, `shown`, `hide`, `hidden` and `pick`.
