@@ -1,10 +1,7 @@
 # Project
 archives
-docs/js/picker.*
-docs/css/picker.*
 node_modules
 resources
-site
 *.map
 
 # Windows image file caches

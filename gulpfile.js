@@ -119,12 +119,7 @@ gulp.task('css', ['less'], () => {
     .pipe(gulp.dest(styles.dest));
 });
 
-gulp.task('site', ['js', 'css'], () => {
-  return gulp.src('docs/**')
-    .pipe(gulp.dest('site'));
-});
-
-gulp.task('release', ['site']);
+gulp.task('release', ['js', 'css']);
 
 gulp.task('watch', () => {
   gulp.watch(scripts.src, ['webpack']);
