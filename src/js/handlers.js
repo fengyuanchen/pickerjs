@@ -45,7 +45,6 @@ export default {
 
   mousedown(e) {
     const self = this;
-    const touches = e.touches;
     let target = e.target;
 
     if (target === self.grid) {
@@ -69,7 +68,7 @@ export default {
       moveY: 0,
       maxMoveY: itemHeight,
       minMoveY: itemHeight / 2,
-      startY: touches ? touches[0].pageY : e.pageY,
+      startY: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
       type: $.getData(target, 'type'),
     };
   },
@@ -84,8 +83,7 @@ export default {
 
     e.preventDefault();
 
-    const touches = e.touches;
-    const endY = touches ? touches[0].pageY : e.pageY;
+    const endY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
     const moveY = cell.moveY + (endY - cell.startY);
 
     cell.startY = endY;

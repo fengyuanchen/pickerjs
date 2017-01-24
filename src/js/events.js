@@ -1,10 +1,10 @@
 import * as $ from './utilities';
 
 // Native events
-const EVENT_MOUSE_DOWN = 'mousedown touchstart pointerdown MSPointerDown';
-const EVENT_MOUSE_MOVE = 'mousemove touchmove pointermove MSPointerMove';
-const EVENT_MOUSE_UP = 'mouseup touchend touchcancel' +
-  ' pointerup pointercancel MSPointerUp MSPointerCancel';
+const PointerEvent = typeof window !== 'undefined' ? window.PointerEvent : null;
+const EVENT_MOUSE_DOWN = PointerEvent ? 'pointerdown' : 'touchstart mousedown';
+const EVENT_MOUSE_MOVE = PointerEvent ? 'pointermove' : 'touchmove mousemove';
+const EVENT_MOUSE_UP = PointerEvent ? ' pointerup pointercancel' : 'touchend touchcancel mouseup';
 const EVENT_KEY_DOWN = 'keydown';
 const EVENT_WHEEL = 'wheel';
 const EVENT_CLICK = 'click';
