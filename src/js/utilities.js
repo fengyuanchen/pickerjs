@@ -47,31 +47,28 @@ export function isPlainObject(obj) {
   }
 }
 
-export function extend(...args) {
-  const deep = args[0] === true;
-  const data = deep ? args[1] : args[0];
+export function extend(obj, ...args) {
+  const deep = obj === true;
 
-  if (args.length > 1) {
-    // if (Object.assign) {
-    //   return Object.assign.apply(Object, args);
-    // }
+  if (deep) {
+    obj = args.shift();
+  }
 
-    args.shift();
-
+  if (isObject(obj) && args.length > 0) {
     args.forEach((arg) => {
       if (isObject(arg)) {
         Object.keys(arg).forEach((key) => {
-          if (deep && isObject(data[key])) {
-            extend(true, data[key], arg[key]);
+          if (deep && isObject(obj[key])) {
+            extend(true, obj[key], arg[key]);
           } else {
-            data[key] = arg[key];
+            obj[key] = arg[key];
           }
         });
       }
     });
   }
 
-  return data;
+  return obj;
 }
 
 export function hasClass(element, value) {
@@ -81,6 +78,10 @@ export function hasClass(element, value) {
 }
 
 export function addClass(element, value) {
+  if (!value) {
+    return;
+  }
+
   if (element.classList) {
     element.classList.add(value);
     return;
@@ -96,6 +97,10 @@ export function addClass(element, value) {
 }
 
 export function removeClass(element, value) {
+  if (!value) {
+    return;
+  }
+
   if (element.classList) {
     element.classList.remove(value);
     return;
@@ -109,6 +114,10 @@ export function removeClass(element, value) {
 }
 
 export function toggleClass(element, value, added) {
+  if (!value) {
+    return;
+  }
+
   // IE10-11 doesn't support the second parameter of `classList.toggle`
   if (added) {
     addClass(element, value);
