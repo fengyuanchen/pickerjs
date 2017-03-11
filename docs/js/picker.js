@@ -1,11 +1,11 @@
 /*!
- * Picker.js v0.1.1
+ * Picker.js v0.1.2
  * https://github.com/fengyuanchen/pickerjs
  *
- * Copyright (c) 2016 Chen Fengyuan
+ * Copyright (c) 2017 Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2016-10-22T12:48:24.738Z
+ * Date: 2017-03-11T07:37:24.622Z
  */
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -423,9 +423,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	// Native events
-	var EVENT_MOUSE_DOWN = 'mousedown touchstart pointerdown MSPointerDown';
-	var EVENT_MOUSE_MOVE = 'mousemove touchmove pointermove MSPointerMove';
-	var EVENT_MOUSE_UP = 'mouseup touchend touchcancel' + ' pointerup pointercancel MSPointerUp MSPointerCancel';
+	var PointerEvent = typeof window !== 'undefined' ? window.PointerEvent : null;
+	var EVENT_POINTER_DOWN = PointerEvent ? 'pointerdown' : 'touchstart mousedown';
+	var EVENT_POINTER_MOVE = PointerEvent ? 'pointermove' : 'touchmove mousemove';
+	var EVENT_POINTER_UP = PointerEvent ? ' pointerup pointercancel' : 'touchend touchcancel mouseup';
 	var EVENT_KEY_DOWN = 'keydown';
 	var EVENT_WHEEL = 'wheel';
 	var EVENT_CLICK = 'click';
@@ -470,9 +471,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    $.addListener(element, EVENT_CLICK, self.onFocus);
 	    $.addListener(picker, EVENT_CLICK, self.onClick = self.click.bind(self));
 	    $.addListener(grid, EVENT_WHEEL, self.onWheel = self.wheel.bind(self));
-	    $.addListener(grid, EVENT_MOUSE_DOWN, self.onMouseDown = self.mousedown.bind(self));
-	    $.addListener(document, EVENT_MOUSE_MOVE, self.onMouseMove = self.mousemove.bind(self));
-	    $.addListener(document, EVENT_MOUSE_UP, self.onMouseUp = self.mouseup.bind(self));
+	    $.addListener(grid, EVENT_POINTER_DOWN, self.onPointerDown = self.pointerdown.bind(self));
+	    $.addListener(document, EVENT_POINTER_MOVE, self.onPointerMove = self.pointermove.bind(self));
+	    $.addListener(document, EVENT_POINTER_UP, self.onPointerUp = self.pointerup.bind(self));
 	    $.addListener(document, EVENT_KEY_DOWN, self.onKeyDown = self.keydown.bind(self));
 	  },
 	  unbind: function unbind() {
@@ -506,9 +507,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    $.removeListener(element, EVENT_CLICK, self.onFocus);
 	    $.removeListener(picker, EVENT_CLICK, self.onClick);
 	    $.removeListener(grid, EVENT_WHEEL, self.onWheel);
-	    $.removeListener(grid, EVENT_MOUSE_DOWN, self.onMouseDown);
-	    $.removeListener(document, EVENT_MOUSE_MOVE, self.onMouseMove);
-	    $.removeListener(document, EVENT_MOUSE_UP, self.onMouseUp);
+	    $.removeListener(grid, EVENT_POINTER_DOWN, self.onPointerDown);
+	    $.removeListener(document, EVENT_POINTER_MOVE, self.onPointerMove);
+	    $.removeListener(document, EVENT_POINTER_UP, self.onPointerUp);
 	    $.removeListener(document, EVENT_KEY_DOWN, self.onKeyDown);
 	  }
 	};
@@ -598,35 +599,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 	
-	function extend() {
-	  for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	    args[_key] = arguments[_key];
+	function extend(obj) {
+	  var deep = obj === true;
+	
+	  for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    args[_key - 1] = arguments[_key];
 	  }
 	
-	  var deep = args[0] === true;
-	  var data = deep ? args[1] : args[0];
+	  if (deep) {
+	    obj = args.shift();
+	  }
 	
-	  if (args.length > 1) {
-	    // if (Object.assign) {
-	    //   return Object.assign.apply(Object, args);
-	    // }
-	
-	    args.shift();
-	
+	  if (isObject(obj) && args.length > 0) {
 	    args.forEach(function (arg) {
 	      if (isObject(arg)) {
 	        Object.keys(arg).forEach(function (key) {
-	          if (deep && isObject(data[key])) {
-	            extend(true, data[key], arg[key]);
+	          if (deep && isObject(obj[key])) {
+	            extend(true, obj[key], arg[key]);
 	          } else {
-	            data[key] = arg[key];
+	            obj[key] = arg[key];
 	          }
 	        });
 	      }
 	    });
 	  }
 	
-	  return data;
+	  return obj;
 	}
 	
 	function hasClass(element, value) {
@@ -634,6 +632,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function addClass(element, value) {
+	  if (!value) {
+	    return;
+	  }
+	
 	  if (element.classList) {
 	    element.classList.add(value);
 	    return;
@@ -649,6 +651,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function removeClass(element, value) {
+	  if (!value) {
+	    return;
+	  }
+	
 	  if (element.classList) {
 	    element.classList.remove(value);
 	    return;
@@ -662,6 +668,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function toggleClass(element, value, added) {
+	  if (!value) {
+	    return;
+	  }
+	
 	  // IE10-11 doesn't support the second parameter of `classList.toggle`
 	  if (added) {
 	    addClass(element, value);
@@ -891,9 +901,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      self.next(type);
 	    }
 	  },
-	  mousedown: function mousedown(e) {
+	  pointerdown: function pointerdown(e) {
 	    var self = this;
-	    var touches = e.touches;
 	    var target = e.target;
 	
 	    if (target === self.grid) {
@@ -917,11 +926,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      moveY: 0,
 	      maxMoveY: itemHeight,
 	      minMoveY: itemHeight / 2,
-	      startY: touches ? touches[0].pageY : e.pageY,
+	      startY: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
 	      type: $.getData(target, 'type')
 	    };
 	  },
-	  mousemove: function mousemove(e) {
+	  pointermove: function pointermove(e) {
 	    var self = this;
 	    var cell = self.cell;
 	
@@ -931,8 +940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    e.preventDefault();
 	
-	    var touches = e.touches;
-	    var endY = touches ? touches[0].pageY : e.pageY;
+	    var endY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
 	    var moveY = cell.moveY + (endY - cell.startY);
 	
 	    cell.startY = endY;
@@ -952,7 +960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      self.next(cell.type);
 	    }
 	  },
-	  mouseup: function mouseup() {
+	  pointerup: function pointerup() {
 	    var self = this;
 	    var cell = self.cell;
 	

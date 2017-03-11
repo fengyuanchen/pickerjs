@@ -1,50 +1,51 @@
 /* Basic */
 
 body {
-  overflow-x: hidden;
-
   margin: 0;
+  overflow-x: hidden;
 }
 
 .browserupgrade {
   margin: 0;
-  padding: 5px 15px;
-
+  padding: .5rem 1rem;
+  background-color: #fcfcfc;
   text-align: center;
-
-  color: #fff;
-  background-color: #ff851b;
 }
+
 
 /* Jumbotron */
 
-.pg-jumbotron {
-  color: #fff;
-  border-radius: 0;
+.docs-jumbotron {
   background-color: #0074d9;
-}
-
-.pg-jumbotron .version {
-  font-size: 14px;
-
-  opacity: .5;
+  border-radius: 0;
   color: #fff;
-
-  filter: alpha(opacity=50);
 }
 
-.pg-carbonads-container {
+.docs-jumbotron .version {
+  font-size: .875rem;
+  color: #fff;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+@media (min-width: 992px) {
+  .docs-jumbotron h1,
+  .docs-jumbotron p {
+    margin-right: 380px;
+  }
+}
+
+.docs-carbonads-container {
   position: relative;
 }
 
-.pg-carbonads {
-  overflow: hidden;
-
-  max-width: 350px;
-  padding: 15px;
-
+.docs-carbonads {
+  font-size: .875rem;
+  max-width: 360px;
+  padding: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: .25rem;
+  overflow: hidden;
 }
 
 .carbon-wrap {
@@ -52,89 +53,76 @@ body {
 }
 
 .carbon-img {
-  display: block;
-  float: left;
   clear: left;
+  float: left;
+  display: block;
 }
 
 .carbon-text,
 .carbon-poweredby {
   display: block;
-
   margin-left: 140px;
-}
-
-.carbon-text {
-  font-size: 14px;
-}
-
-.carbon-poweredby {
-  font-size: 12px;
 }
 
 .carbon-text,
 .carbon-text:hover,
 .carbon-text:focus {
-  text-decoration: none;
-
   color: #fff;
+  text-decoration: none;
 }
 
 .carbon-poweredby,
 .carbon-poweredby:hover,
 .carbon-poweredby:focus {
-  text-decoration: none;
-
   color: #ddd;
+  text-decoration: none;
 }
 
 @media (min-width: 992px) {
-  .pg-carbonads {
+  .docs-carbonads {
     position: absolute;
     right: 0;
-    bottom: -1rem;
+    bottom: -1.25rem;
   }
 }
 
 
 /* Content */
 
-.pg-picker-container {
-  position: relative;
-
-  display: none;
-
-  min-height: 40px;
-  margin: 10px auto;
-
+.docs-picker-container {
   border: 1px dashed #eee;
+  display: none;
+  margin: 10px auto;
+  min-height: 40px;
+  position: relative;
 }
 
-.pg-picker-container::before {
-  font-size: 12px;
-
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-
-  content: 'Container for inline picker';
-  transform: translate(-50%, -50%);
-
+.docs-picker-container::before {
   color: #ccc;
+  content: 'Container for inline picker';
+  font-size: 12px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
-.pg-options > .input-group {
+.docs-options .form-check {
+  margin-bottom: 0;
+}
+
+.docs-options > .input-group {
   margin-bottom: 10px;
 }
 
-.pg-options > .input-group > .input-group-addon {
+.docs-options > .input-group > .input-group-addon {
   min-width: 100px;
 }
 
-.pg-methods > .input-group,
-.pg-methods > .btn-group,
-.pg-methods > .btn {
+.docs-methods > .input-group,
+.docs-methods > .btn-group,
+.docs-methods > .btn {
   margin-bottom: 10px;
 }
 
@@ -149,63 +137,50 @@ body {
 
 /* Footer */
 
-.pg-footer {
+.docs-footer {
+  font-size: .875rem;
   overflow: hidden;
 }
 
-.pg-links {
-  margin-bottom: 30px;
-
-  text-align: center;
+.docs-footer .nav {
+  margin-bottom: 1rem;
 }
 
-.pg-heart {
-  font-size: 18px;
-  line-height: 30px;
-
+.docs-heart {
   position: relative;
-
   display: block;
-
   width: 100%;
-  height: 30px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  text-align: center;
-
+  height: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 0;
   color: #ddd;
+  font-size: 1.125rem;
+  line-height: 2rem;
+  text-align: center;
 }
 
-.pg-heart:hover {
+.docs-heart:hover {
   color: #ff4136;
 }
 
-.pg-heart::before {
+.docs-heart:before {
   position: absolute;
   top: 50%;
   right: 0;
   left: 0;
-
   display: block;
-
   height: 0;
-
-  content: ' ';
-
   border-top: 1px solid #eee;
+  content: " ";
 }
 
-.pg-heart::after {
+.docs-heart:after {
   position: relative;
   z-index: 1;
-
-  padding-right: 8px;
-  padding-left: 8px;
-
-  content: '♥';
-
+  padding-left: .5rem;
+  padding-right: .5rem;
   background-color: #fff;
+  content: "♥";
 }
 
 

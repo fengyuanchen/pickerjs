@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 0.1.2 (Mar 11, 2017)
+
+- Improved event handler for Pointer Events (#3).
+
+
 ## 0.1.1 (Oct 22, 2016)
 
 - Fixed the issue of increment and decrement (#1).

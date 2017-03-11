@@ -1,11 +1,11 @@
 /*!
- * Picker.js v0.1.1
+ * Picker.js v0.1.2
  * https://github.com/fengyuanchen/pickerjs
  *
- * Copyright (c) 2016 Chen Fengyuan
+ * Copyright (c) 2017 Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2016-10-22T12:48:24.738Z
+ * Date: 2017-03-11T07:37:24.622Z
  */
 
 .picker {
@@ -17,6 +17,8 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -ms-touch-action: none;
+      touch-action: none;
   -webkit-transition: opacity .15s ease;
   -o-transition: opacity .15s ease;
   transition: opacity .15s ease;

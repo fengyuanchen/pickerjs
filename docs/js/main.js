@@ -3,8 +3,8 @@ window.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
   var Picker = window.Picker;
-  var input = document.querySelector('.pg-date');
-  var pickerContainer = document.querySelector('.pg-picker-container');
+  var input = document.querySelector('.docs-date');
+  var pickerContainer = document.querySelector('.docs-picker-container');
   var options = {
     show:  function (e) {
       console.log(e.type);
@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', function () {
     console.log(e.type);
   }, false);
 
-  document.querySelector('.pg-options').addEventListener('change', function (e) {
+  document.querySelector('.docs-options').addEventListener('change', function (e) {
     if (!picker) {
       return;
     }
@@ -97,7 +97,7 @@ window.addEventListener('DOMContentLoaded', function () {
     picker = new Picker(input, options);
   }, false);
 
-  document.querySelector('.pg-methods').addEventListener('click', function (e) {
+  document.querySelector('.docs-methods').addEventListener('click', function (e) {
     if (!picker) {
       return;
     }
