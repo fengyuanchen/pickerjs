@@ -43,7 +43,7 @@ export default {
     }
   },
 
-  mousedown(e) {
+  pointerdown(e) {
     const self = this;
     let target = e.target;
 
@@ -73,7 +73,7 @@ export default {
     };
   },
 
-  mousemove(e) {
+  pointermove(e) {
     const self = this;
     const cell = self.cell;
 
@@ -104,7 +104,7 @@ export default {
     }
   },
 
-  mouseup() {
+  pointerup() {
     const self = this;
     const cell = self.cell;
 

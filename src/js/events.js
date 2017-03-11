@@ -2,9 +2,9 @@ import * as $ from './utilities';
 
 // Native events
 const PointerEvent = typeof window !== 'undefined' ? window.PointerEvent : null;
-const EVENT_MOUSE_DOWN = PointerEvent ? 'pointerdown' : 'touchstart mousedown';
-const EVENT_MOUSE_MOVE = PointerEvent ? 'pointermove' : 'touchmove mousemove';
-const EVENT_MOUSE_UP = PointerEvent ? ' pointerup pointercancel' : 'touchend touchcancel mouseup';
+const EVENT_POINTER_DOWN = PointerEvent ? 'pointerdown' : 'touchstart mousedown';
+const EVENT_POINTER_MOVE = PointerEvent ? 'pointermove' : 'touchmove mousemove';
+const EVENT_POINTER_UP = PointerEvent ? ' pointerup pointercancel' : 'touchend touchcancel mouseup';
 const EVENT_KEY_DOWN = 'keydown';
 const EVENT_WHEEL = 'wheel';
 const EVENT_CLICK = 'click';
@@ -49,9 +49,9 @@ export default {
     $.addListener(element, EVENT_CLICK, self.onFocus);
     $.addListener(picker, EVENT_CLICK, (self.onClick = self.click.bind(self)));
     $.addListener(grid, EVENT_WHEEL, (self.onWheel = self.wheel.bind(self)));
-    $.addListener(grid, EVENT_MOUSE_DOWN, (self.onMouseDown = self.mousedown.bind(self)));
-    $.addListener(document, EVENT_MOUSE_MOVE, (self.onMouseMove = self.mousemove.bind(self)));
-    $.addListener(document, EVENT_MOUSE_UP, (self.onMouseUp = self.mouseup.bind(self)));
+    $.addListener(grid, EVENT_POINTER_DOWN, (self.onPointerDown = self.pointerdown.bind(self)));
+    $.addListener(document, EVENT_POINTER_MOVE, (self.onPointerMove = self.pointermove.bind(self)));
+    $.addListener(document, EVENT_POINTER_UP, (self.onPointerUp = self.pointerup.bind(self)));
     $.addListener(document, EVENT_KEY_DOWN, (self.onKeyDown = self.keydown.bind(self)));
   },
 
@@ -86,9 +86,9 @@ export default {
     $.removeListener(element, EVENT_CLICK, self.onFocus);
     $.removeListener(picker, EVENT_CLICK, self.onClick);
     $.removeListener(grid, EVENT_WHEEL, self.onWheel);
-    $.removeListener(grid, EVENT_MOUSE_DOWN, self.onMouseDown);
-    $.removeListener(document, EVENT_MOUSE_MOVE, self.onMouseMove);
-    $.removeListener(document, EVENT_MOUSE_UP, self.onMouseUp);
+    $.removeListener(grid, EVENT_POINTER_DOWN, self.onPointerDown);
+    $.removeListener(document, EVENT_POINTER_MOVE, self.onPointerMove);
+    $.removeListener(document, EVENT_POINTER_UP, self.onPointerUp);
     $.removeListener(document, EVENT_KEY_DOWN, self.onKeyDown);
   },
 };
