@@ -53,12 +53,12 @@ gulp.task('webpack', () => {
             test: /\.js$/,
             loader: 'babel',
             query: {
-              presets: ['es2015'],
+              presets: ['env'],
             },
           },
         ],
       },
-      devtool: 'source-map',
+      devtool: false,
     }))
     .pipe(gulp.dest(scripts.docs))
     .pipe(gulp.dest(scripts.dest));
