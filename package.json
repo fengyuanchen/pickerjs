@@ -10,6 +10,10 @@
     "name": "Chen Fengyuan",
     "url": "http://chenfengyuan.com"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "keywords": [
     "date",
     "time",
