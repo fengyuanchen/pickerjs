@@ -4,8 +4,6 @@
 
 - [Website](https://fengyuanchen.github.io/pickerjs)
 
-
-
 ## Table of contents
 
 - [Main](#main)
@@ -18,19 +16,15 @@
 - [Versioning](#versioning)
 - [License](#license)
 
-
-
 ## Main
 
-```
+```text
 dist/
 ├── picker.css     ( 4 KB)
 ├── picker.min.css ( 3 KB)
 ├── picker.js      (41 KB)
 └── picker.min.js  (18 KB)
 ```
-
-
 
 ## Getting started
 
@@ -43,7 +37,6 @@ Four quick start options are available:
 - Install with [NPM](https://npmjs.com): `npm install pickerjs`.
 - Install with [Bower](https://bower.io): `bower install pickerjs`.
 
-
 ### Installation
 
 Include files:
@@ -52,7 +45,6 @@ Include files:
 <link  href="/path/to/picker.css" rel="stylesheet">
 <script src="/path/to/picker.js"></script>
 ```
-
 
 ### Usage
 
@@ -65,16 +57,12 @@ Initialize with `Picker` constructor:
 const picker = new Picker(element, options);
 ```
 
-
 [⬆ Back to top](#table-of-contents)
-
-
 
 ## Options
 
 You may set picker options with `new Picker(element, options)`.
 If you want to change the global default options, You may use `Picker.setDefaults(options)`.
-
 
 ### container
 
@@ -83,19 +71,19 @@ If you want to change the global default options, You may use `Picker.setDefault
 
 Define the container for putting the picker. If not present, the picker will be appended to the `document.body`.
 
-
 ```js
 new Picker(element, {
   container: document.querySelector('.picker-container'),
 });
 ```
+
 Or
+
 ```js
 new Picker(element, {
   container: '.picker-container',
 });
 ```
-
 
 ### date
 
@@ -104,19 +92,19 @@ new Picker(element, {
 
 The initial date. If not present, use the current date.
 
-
 ```js
 new Picker(element, {
   date: new Date(2048, 9, 24, 5, 12),
 });
 ```
+
 Or
+
 ```js
 new Picker(element, {
   date: '2048-10-24 05:12',
 });
 ```
-
 
 ### format
 
@@ -145,21 +133,21 @@ new Picker(element, {
 
 The date string format, also as the sorting order of date time columns.
 
-
 ```js
 new Picker(element, {
   date: '2048-10-24 05:12:02.056',
   format: 'YYYY-MM-DD HH:mm:ss.SSS',
 });
 ```
+
 Or
+
 ```js
 new Picker(element, {
   date: 'Jul 15, 2016',
   format: 'MMM D, YYYY',
 });
 ```
-
 
 ### increment
 
@@ -173,7 +161,9 @@ new Picker(element, {
   increment: 10,
 });
 ```
+
 Or
+
 ```js
 new Picker(element, {
   increment: {
@@ -188,14 +178,12 @@ new Picker(element, {
 });
 ```
 
-
 ### inline
 
 - Type: `Boolean`
 - Default: `false`
 
 Enable inline mode.
-
 
 ### language
 
@@ -204,14 +192,12 @@ Enable inline mode.
 
 Define the language.
 
-
 ### months
 
 - Type: `Array`
 - Default: `['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']`
 
 Months' name.
-
 
 ### monthsShort
 
@@ -220,16 +206,16 @@ Months' name.
 
 Short months' name.
 
-
 ### translate
 
 - Type: `Function`
 - Default:
-```js
-function (type, text) {
-  return text;
-}
-```
+
+  ```js
+  function (type, text) {
+    return text;
+  }
+  ```
 
 Translate date time text.
 
@@ -243,7 +229,6 @@ new Picker(element, {
 });
 ```
 
-
 ### rows
 
 - Type: `Number`
@@ -251,21 +236,20 @@ new Picker(element, {
 
 Define the number of rows for showing.
 
-
 ### text
 
 - Type: `Object`
 - Default:
-```js
-{
-  title: 'Pick a date / time',
-  cancel: 'Cancel',
-  confirm: 'OK',
-}
-```
+
+  ```js
+  {
+    title: 'Pick a date / time',
+    cancel: 'Cancel',
+    confirm: 'OK',
+  }
+  ```
 
 Define the title and button text of the picker.
-
 
 ### show
 
@@ -274,14 +258,12 @@ Define the title and button text of the picker.
 
 The shortcut of the `show` event.
 
-
 ### shown
 
 - Type: `Function`
 - Default: `null`
 
 The shortcut of the `shown` event.
-
 
 ### hide
 
@@ -290,14 +272,12 @@ The shortcut of the `shown` event.
 
 The shortcut of the `hide` event.
 
-
 ### hidden
 
 - Type: `Function`
 - Default: `null`
 
 The shortcut of the `hidden` event.
-
 
 ### pick
 
@@ -306,25 +286,19 @@ The shortcut of the `hidden` event.
 
 The shortcut of the `pick` event.
 
-
 [⬆ Back to top](#table-of-contents)
-
-
 
 ## Methods
 
 If a method doesn't need to return any value, it will return the cropper instance (`this`) for chain composition.
 
-
 ### show()
 
 Show the picker.
 
-
 ### hide()
 
 Hide the picker.
-
 
 ### prev(type)
 
@@ -335,18 +309,15 @@ Hide the picker.
 
 Pick the previous item.
 
-
 ### next(type)
 
 - **type**: (the same as the `prev` method)
 
 Pick the next item.
 
-
 ### pick()
 
 Pick the current date to the target element.
-
 
 ### getDate([formatted])
 
@@ -370,7 +341,6 @@ picker.getDate(true);
 // > 2048-10-24 05:12
 ```
 
-
 ### setDate(date)
 
 - **date**:
@@ -379,16 +349,13 @@ picker.getDate(true);
 
 Override the current date with a new date.
 
-
 ### update()
 
 Update the picker with the current the element value / text.
 
-
 ### reset()
 
 Reset the picker and the element value / text.
-
 
 ### parseDate(date)
 
@@ -405,7 +372,6 @@ const picker = new Picker(element, options);
 picker.parseDate('2048-10-24 05:12');
 // > Sat Oct 24 2048 05:12:00 GMT+0800 (中国标准时间)
 ```
-
 
 ### formatDate(date)
 
@@ -424,15 +390,11 @@ picker.formatDate(new Date(2048, 9, 24, 5, 12));
 // > 2048-10-24 05:12
 ```
 
-
 ### destroy()
 
 Destroy the picker and remove the instance from the target element.
 
-
 [⬆ Back to top](#table-of-contents)
-
-
 
 ## Events
 
@@ -442,13 +404,11 @@ This event fires when a picker modal starts to show.
 
 > Only available in non-inline mode.
 
-
 ### shown
 
 This event fires when a picker modal has shown.
 
 > Only available in non-inline mode.
-
 
 ### hide
 
@@ -456,13 +416,11 @@ This event fires when a picker modal starts to hide.
 
 > Only available in non-inline mode.
 
-
 ### hidden
 
 This event fires when a picker modal has hidden.
 
 > Only available in non-inline mode.
-
 
 ### pick
 
@@ -470,10 +428,7 @@ This event fires when pick the current date to the target element.
 
 > If the target element is an `<input>` or `textarea`, then a `change` event will be triggered too.
 
-
 [⬆ Back to top](#table-of-contents)
-
-
 
 ## No conflict
 
@@ -488,8 +443,6 @@ If you have to use other picker with the same namespace, just call the `Picker.n
 </script>
 ```
 
-
-
 ## Browser support
 
 - Chrome (latest)
@@ -499,17 +452,12 @@ If you have to use other picker with the same namespace, just call the `Picker.n
 - Edge (latest)
 - Internet Explorer 9+
 
-
-
 ## Versioning
 
 Maintained under the [Semantic Versioning guidelines](http://semver.org/).
 
-
-
 ## License
 
 [MIT](http://opensource.org/licenses/MIT) © [Chen Fengyuan](http://chenfengyuan.com)
-
 
 [⬆ Back to top](#table-of-contents)

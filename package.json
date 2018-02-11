@@ -1,7 +1,7 @@
 {
   "name": "pickerjs",
   "description": "JavaScript date time picker.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "main": "dist/picker.js",
   "license": "MIT",
   "repository": "fengyuanchen/pickerjs",
@@ -23,10 +23,14 @@
     "web",
     "development"
   ],
+  "scripts": {
+    "release": "gulp release",
+    "start": "gulp"
+  },
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.4.0",
-    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-env": "^1.6.1",
     "eslint": "^3.17.1",
     "eslint-config-airbnb-base": "^9.0.0",
     "eslint-plugin-import": "^2.0.1",
