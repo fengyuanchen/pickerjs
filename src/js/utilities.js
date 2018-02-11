@@ -1,5 +1,5 @@
 const REGEXP_SPACES = /\s+/;
-const REGEXP_TOKENS = /(Y|M|D|H|m|s|S)+/g;
+const REGEXP_TOKENS = /(Y|M|D|H|m|s|S)\1+/g;
 const REGEXP_HYPHEN = /([a-z\d])([A-Z])/g;
 const toString = Object.prototype.toString;
 const hasOwnProperty = Object.prototype.hasOwnProperty;
