@@ -51,6 +51,9 @@ export default {
       return;
     }
 
+    // This line is required for preventing page zooming in iOS browsers
+    e.preventDefault();
+
     if (target.tagName.toLowerCase() === 'li') {
       target = target.parentNode;
     }
@@ -104,13 +107,15 @@ export default {
     }
   },
 
-  pointerup() {
+  pointerup(e) {
     const self = this;
     const cell = self.cell;
 
     if (!cell) {
       return;
     }
+
+    e.preventDefault();
 
     cell.list.style.top = 0;
 
