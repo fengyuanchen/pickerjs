@@ -51,7 +51,7 @@ export default {
       return;
     }
 
-    // This line is required for preventing page zooming in iOS browsers
+    // This line is required for preventing page scrolling in iOS browsers
     e.preventDefault();
 
     if (target.tagName.toLowerCase() === 'li') {
