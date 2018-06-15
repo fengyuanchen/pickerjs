@@ -1,5 +1,7 @@
 # Picker.js
 
+[![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
+
 > JavaScript date time picker.
 
 - [Website](https://fengyuanchen.github.io/pickerjs)
@@ -458,6 +460,6 @@ Maintained under the [Semantic Versioning guidelines](http://semver.org/).
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT) © [Chen Fengyuan](http://chenfengyuan.com)
+[MIT](https://opensource.org/licenses/MIT) © [Chen Fengyuan](https://chenfengyuan.com)
 
 [⬆ Back to top](#table-of-contents)
