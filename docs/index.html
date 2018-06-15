@@ -8,8 +8,7 @@
   <meta name="keywords" content="HTML, CSS, JS, JavaScript, pickerjs, datepicker, timepicker, front-end, frontend, web development">
   <meta name="author" content="Chen Fengyuan">
   <title>Picker.js</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/picker.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
@@ -19,7 +18,7 @@
   <![endif]-->
 
   <!-- Header -->
-  <header class="navbar navbar-light navbar-toggleable-md">
+  <header class="navbar navbar-light navbar-expand-md">
     <div class="container">
       <a class="navbar-brand" href="./">Picker.js</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +29,7 @@
           <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs/blob/master/README.md">Docs <span class="sr-only">(current)</span></a>
           <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs">GitHub</a>
           <a class="nav-link" href="https://fengyuanchen.github.io">More</a>
-          <a class="nav-link" href="http://chenfengyuan.com">About</a>
+          <a class="nav-link" href="https://chenfengyuan.com">About</a>
         </nav>
       </div>
     </nav>
@@ -43,7 +42,7 @@
       <p class="lead">JavaScript date time picker.</p>
       <div class="docs-carbonads-container">
         <div class="docs-carbonads">
-          <script id="_carbonads_js" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=fengyuanchen" async></script>
+          <script id="_carbonads_js" src="//cdn.carbonads.com/carbon.js?serve=CKYI55Q7&placement=fengyuanchengithubio" async></script>
         </div>
       </div>
     </div>
@@ -70,31 +69,35 @@
           <ul class="list-group">
             <li class="list-group-item">
               <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="container"> container
-                </label>
+                <input type="checkbox" class="form-check-input" id="container" name="container">
+                <label class="form-check-label" for="container">container</label>
               </div>
             </li>
             <li class="list-group-item">
               <div class="form-check">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="inline"> inline
-                </label>
+                <input type="checkbox" class="form-check-input" id="inline" name="inline">
+                <label class="form-check-label" for="inline">inline</label>
               </div>
             </li>
           </ul>
           <hr>
           <div class="input-group">
-            <span class="input-group-addon" id="option-date">date</span>
-            <input type="text" class="form-control" name="date" value aria-describedby="option-date" placeholder="null">
+            <span class="input-group-prepend">
+              <label class="input-group-text" for="date">date</label>
+            </span>
+            <input type="text" class="form-control" id="date" name="date" placeholder="null">
           </div>
           <div class="input-group">
-            <span class="input-group-addon" id="option-format">format</span>
-            <input type="text" class="form-control" name="format" value="YYYY-MM-DD HH:mm" aria-describedby="option-format" placeholder="YYYY-MM-DD HH:mm">
+            <span class="input-group-prepend">
+              <label class="input-group-text" for="format">format</label>
+            </span>
+            <input type="text" class="form-control" id="format" name="format" value="YYYY-MM-DD HH:mm" placeholder="YYYY-MM-DD HH:mm">
           </div>
           <div class="input-group">
-            <span class="input-group-addon" id="option-language">language</span>
-            <select class="form-control" id="option-language" name="language">
+            <span class="input-group-prepend">
+              <label class="input-group-text" for="language">language</label>
+            </span>
+            <select class="form-control" id="language" name="language">
               <option value="">(Default)</option>
               <option value="en-US">en-US</option>
               <option value="en-GB">en-GB</option>
@@ -102,8 +105,10 @@
             </select>
           </div>
           <div class="input-group">
-            <span class="input-group-addon" id="option-rows">rows</span>
-            <select class="form-control" id="option-rows" name="rows">
+            <span class="input-group-prepend">
+              <label class="input-group-text" for="rows">rows</label>
+            </span>
+            <select class="form-control" id="rows" name="rows">
               <option value="1">1</option>
               <option value="3">3</option>
               <option value="5" selected>5</option>
@@ -119,13 +124,13 @@
         <hr>
         <div class="docs-methods">
           <div class="input-group">
-            <div class="input-group-btn">
+            <div class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-method="getDate" data-related-target="#putDate">Get Date</button>
             </div>
             <input type="text" class="form-control" id="putDate">
           </div>
           <div class="input-group">
-            <div class="input-group-btn">
+            <div class="input-group-prepend">
               <button type="button" class="btn btn-primary" data-args="[true]" data-method="getDate" data-related-target="#putDateFormatted">Get Date (formatted)</button>
             </div>
             <input type="text" class="form-control" id="putDateFormatted">
@@ -144,7 +149,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Date Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <input type="text" class="form-control js-date-picker" value="10/24/2048">
         <br>
@@ -153,7 +158,7 @@
 &lt;input type=&quot;text&quot; class=&quot;form-control js-date-picker&quot; value=&quot;10/24/2048&quot;&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-date-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-date-picker'), {
   format: 'MM/DD/YYYY',
 });</pre>
       </div>
@@ -161,7 +166,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Time Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <input type="text" class="form-control js-time-picker" value="02:56">
         <br>
@@ -170,7 +175,7 @@
 &lt;input type=&quot;text&quot; class=&quot;form-control js-time-picker&quot; value=&quot;02:56&quot;&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-time-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-time-picker'), {
   format: 'HH:mm',
 });</pre>
       </div>
@@ -178,7 +183,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Full Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <input type="text" class="form-control js-full-picker" value="2048-10-24 05:12:02.056">
         <br>
@@ -187,7 +192,7 @@
 &lt;input type=&quot;text&quot; class=&quot;form-control js-full-picker&quot; value=&quot;2048-10-24 05:12:02.056&quot;&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-full-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-full-picker'), {
   format: 'YYYY-MM-DD HH:mm:ss.SSS',
 });</pre>
       </div>
@@ -195,7 +200,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Month Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <input type="text" class="form-control js-month-picker" value="November">
         <br>
@@ -204,7 +209,7 @@
 &lt;input type=&quot;text&quot; class=&quot;form-control js-month-picker&quot; value=&quot;November&quot;&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-month-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-month-picker'), {
   format: 'MMMM',
 });</pre>
       </div>
@@ -212,7 +217,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Inline Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <div class="js-inline-picker">2048-10-24 05:12</div>
         <br>
@@ -221,7 +226,7 @@
 &lt;div class=&quot;js-inline-picker&quot;&gt;2048-10-24 05:12&lt;/div&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-inline-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-inline-picker'), {
   inline: true,
 });</pre>
       </div>
@@ -229,18 +234,18 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Mini Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
-        <input type="text" class="form-control hidden-xs-up js-mini-picker">
+        <input type="text" class="form-control sr-only js-mini-picker">
         <div class="js-mini-picker-container"></div>
         <br>
         <h6>HTML</h6>
         <pre class="prettyprint">
-&lt;input type=&quot;text&quot; class=&quot;form-control hidden-xs-up js-mini-picker&quot;&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control sr-only js-mini-picker&quot;&gt;
 &lt;div class=&quot;js-mini-picker-container&quot;&gt;&lt;/div&gt;
 </pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-mini-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-mini-picker'), {
   container: '.js-mini-picker-container',
   inline: true,
   rows: 1,
@@ -250,7 +255,7 @@
 
     <div class="card mb-4">
       <h4 class="card-header">Super Picker</h4>
-      <div class="card-block">
+      <div class="card-body">
         <h6>Demo</h6>
         <input type="text" class="form-control js-super-picker" value="2020年2月20日2时20分">
         <div class="js-super-picker-container"></div>
@@ -268,7 +273,7 @@
   width: 28%;
 }</pre>
         <h6>JavaScript</h6>
-        <pre class="prettyprint">new Picker(document.querySelector('.js-super-picker'), {
+        <pre class="prettyprint mb-0">new Picker(document.querySelector('.js-super-picker'), {
   container: '.js-super-picker-container',
   format: 'YYYY年M月D日H时m分',
   increment: {
@@ -304,16 +309,15 @@
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs">GitHub</a>
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs/releases">Releases</a>
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs/blob/master/LICENSE">License</a>
-        <a class="nav-link" href="http://chenfengyuan.com">About</a>
+        <a class="nav-link" href="https://chenfengyuan.com">About</a>
       </nav>
     </div>
   </footer>
   </footer>
 
   <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <script src="https://fengyuanchen.github.io/js/common.js"></script>
   <script src="js/picker.js"></script>

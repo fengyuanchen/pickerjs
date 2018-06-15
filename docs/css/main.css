@@ -92,7 +92,7 @@ body {
 .docs-picker-container {
   border: 1px dashed #eee;
   display: none;
-  margin: 10px auto;
+  margin:.5rem auto;
   min-height: 40px;
   position: relative;
 }
@@ -112,18 +112,18 @@ body {
   margin-bottom: 0;
 }
 
-.docs-options > .input-group {
-  margin-bottom: 10px;
+.docs-options .input-group {
+  margin-bottom:.5rem;
 }
 
-.docs-options > .input-group > .input-group-addon {
-  min-width: 100px;
+.docs-options .input-group-prepend .input-group-text {
+  min-width: 6rem;
 }
 
 .docs-methods > .input-group,
 .docs-methods > .btn-group,
 .docs-methods > .btn {
-  margin-bottom: 10px;
+  margin-bottom: .5rem;
 }
 
 .js-super-picker-container .picker-cell {
@@ -187,6 +187,7 @@ body {
 /* Google Code Prettify */
 
 pre.prettyprint {
-  padding: 1rem !important;
   border-color: #ddd !important;
+  border-radius: .25rem;
+  padding: 1rem !important;
 }
