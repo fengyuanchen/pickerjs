@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0-beta (Jun 18, 2018)
+
+- Refactor the core code.
+- Refactor the test code.
+- Add type definitions file for TypeScript.
+- Fix page scrolling issue in iOS browsers (#9).
+
 ## 0.2.0 (Feb 11, 2018)
 
 - Enhance the `format` option to support no separator mode as `YYYYMMDD` (#7).
@@ -19,3 +26,5 @@
 - Supports 5 events: `show`, `shown`, `hide`, `hidden` and `pick`.
 
 ## 0.0.1 (Jun 1, 2016)
+
+- Init.

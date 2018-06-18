@@ -1,6 +1,6 @@
 # Picker.js
 
-[![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
+[![Build Status](https://travis-ci.org/fengyuanchen/pickerjs.svg)](https://travis-ci.org/fengyuanchen/pickerjs) [![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
 
 > JavaScript date time picker.
 
@@ -22,24 +22,21 @@
 
 ```text
 dist/
-├── picker.css     ( 4 KB)
-├── picker.min.css ( 3 KB)
-├── picker.js      (41 KB)
-└── picker.min.js  (18 KB)
+├── picker.css
+├── picker.min.css   (compressed)
+├── picker.js        (UMD)
+├── picker.min.js    (UMD, compressed)
+├── picker.common.js (CommonJS, default)
+└── picker.esm.js    (ES Module)
 ```
 
 ## Getting started
 
-### Quick start
-
-Four quick start options are available:
-
-- [Download the latest release](https://github.com/fengyuanchen/pickerjs/archive/master.zip).
-- Clone the repository: `git clone https://github.com/fengyuanchen/pickerjs.git`.
-- Install with [NPM](https://npmjs.com): `npm install pickerjs`.
-- Install with [Bower](https://bower.io): `bower install pickerjs`.
-
 ### Installation
+
+```shell
+npm install pickerjs
+```
 
 Include files:
 
@@ -50,13 +47,31 @@ Include files:
 
 ### Usage
 
-Initialize with `Picker` constructor:
-
-- Browser: `window.Picker`
-- CommonJS: `const Picker = require('pickerjs')`
+#### Syntax
 
 ```js
-const picker = new Picker(element, options);
+new Picker(element[, options])
+```
+
+- **element**
+  - Type: `HTMLElement`
+  - The target element for picking.
+
+- **options** (optional)
+  - Type: `Object`
+  - The options for picking. Check out the available [options](#options).
+
+#### Example
+
+```html
+<input type="text" id="input">
+```
+
+```js
+var input = document.getElementById('input');
+var picker = new Picker(input, {
+  format: 'YYYY/MM/DD HH:mm',
+});
 ```
 
 [⬆ Back to top](#table-of-contents)
@@ -194,6 +209,8 @@ Enable inline mode.
 
 Define the language.
 
+> You should define the language first. Check out the [i18n](i18n) folder for more information.
+
 ### months
 
 - Type: `Array`
@@ -207,6 +224,28 @@ Months' name.
 - Default: `['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']`
 
 Short months' name.
+
+### rows
+
+- Type: `Number`
+- Default: `5`
+
+Define the number of rows for showing.
+
+### text
+
+- Type: `Object`
+- Default:
+
+  ```js
+  {
+    title: 'Pick a date / time',
+    cancel: 'Cancel',
+    confirm: 'OK',
+  }
+  ```
+
+Define the title and button text of the picker.
 
 ### translate
 
@@ -230,28 +269,6 @@ new Picker(element, {
   },
 });
 ```
-
-### rows
-
-- Type: `Number`
-- Default: `5`
-
-Define the number of rows for showing.
-
-### text
-
-- Type: `Object`
-- Default:
-
-  ```js
-  {
-    title: 'Pick a date / time',
-    cancel: 'Cancel',
-    confirm: 'OK',
-  }
-  ```
-
-Define the title and button text of the picker.
 
 ### show
 
@@ -292,7 +309,7 @@ The shortcut of the `pick` event.
 
 ## Methods
 
-If a method doesn't need to return any value, it will return the cropper instance (`this`) for chain composition.
+If a method doesn't need to return any value, it will return the picker instance (`this`) for chain composition.
 
 ### show()
 
@@ -428,7 +445,7 @@ This event fires when a picker modal has hidden.
 
 This event fires when pick the current date to the target element.
 
-> If the target element is an `<input>` or `textarea`, then a `change` event will be triggered too.
+> If the target element is an `<input>` or `<textarea>` element, then a `change` event will be triggered too.
 
 [⬆ Back to top](#table-of-contents)
 

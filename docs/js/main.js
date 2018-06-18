@@ -1,5 +1,4 @@
-window.addEventListener('DOMContentLoaded', function () {
-
+window.onload = function () {
   'use strict';
 
   var Picker = window.Picker;
@@ -174,5 +173,4 @@ window.addEventListener('DOMContentLoaded', function () {
       return Number(text) + suffixes[type];
     },
   });
-
-}, false);
+};

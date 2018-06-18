@@ -14,7 +14,12 @@
 </head>
 <body>
   <!--[if lt IE 9]>
-  <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <div class="alert alert-warning alert-dismissible fade show m-0 rounded-0" role="alert">
+    You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
   <![endif]-->
 
   <!-- Header -->
@@ -36,13 +41,17 @@
   </header>
 
   <!-- Jumbotron -->
-  <div class="jumbotron docs-jumbotron">
+  <div class="jumbotron bg-primary text-white rounded-0">
     <div class="container">
-      <h1>Picker.js <small class="version">v0.2.0</small></h1>
-      <p class="lead">JavaScript date time picker.</p>
-      <div class="docs-carbonads-container">
-        <div class="docs-carbonads">
-          <script id="_carbonads_js" src="//cdn.carbonads.com/carbon.js?serve=CKYI55Q7&placement=fengyuanchengithubio" async></script>
+      <div class="row">
+        <div class="col-md">
+          <h1>Picker.js <small class="h6">v1.0.0-beta</small></h1>
+          <p class="lead">JavaScript date time picker.</p>
+        </div>
+        <div class="col-md">
+          <div class="carbonads">
+            <script id="_carbonads_js" src="//cdn.carbonads.com/carbon.js?serve=CKYI55Q7&placement=fengyuanchengithubio" async></script>
+          </div>
         </div>
       </div>
     </div>
@@ -302,17 +311,16 @@
   </div>
 
   <!-- Footer -->
-  <footer class="docs-footer">
+  <footer class="footer">
     <div class="container">
-      <p class="docs-heart"></p>
-      <nav class="nav flex-wrap justify-content-center">
+      <p class="heart"></p>
+      <nav class="nav flex-wrap justify-content-center mb-3">
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs">GitHub</a>
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs/releases">Releases</a>
         <a class="nav-link" href="https://github.com/fengyuanchen/pickerjs/blob/master/LICENSE">License</a>
         <a class="nav-link" href="https://chenfengyuan.com">About</a>
       </nav>
     </div>
-  </footer>
   </footer>
 
   <!-- Scripts -->
