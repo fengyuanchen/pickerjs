@@ -1,252 +1,281 @@
-import * as $ from './utilities';
+import {
+  CLASS_OPEN,
+  CLASS_OPENED,
+  CLASS_PICKED,
+  EVENT_HIDDEN,
+  EVENT_HIDE,
+  EVENT_PICK,
+  EVENT_SHOW,
+  EVENT_SHOWN,
+  NAMESPACE,
+} from './constants';
+import {
+  addClass,
+  addLeadingZero,
+  dispatchEvent,
+  getData,
+  isDate,
+  isFunction,
+  isString,
+  isValidDate,
+  removeClass,
+  removeData,
+  setData,
+} from './utilities';
 
 export default {
-  // Show the picker.
-  show() {
-    const self = this;
-    const element = self.element;
-    const picker = self.picker;
+  /**
+   * Show the picker.
+   * @param {boolean} [immediate=false] - Indicate if show the picker immediately or not.
+   * @returns {Picker} this
+   */
+  show(immediate = false) {
+    const { element, picker } = this;
 
-    if (self.inline || self.shown) {
-      return self;
+    if (this.inline || this.shown) {
+      return this;
     }
 
-    if ($.dispatchEvent(element, 'show') === false) {
-      return self;
+    if (dispatchEvent(element, EVENT_SHOW) === false) {
+      return this;
     }
 
-    self.shown = true;
+    this.shown = true;
+    this.open();
+    addClass(picker, CLASS_OPEN);
 
-    const style = document.body.style;
+    const done = () => {
+      dispatchEvent(element, EVENT_SHOWN);
+    };
 
-    style.overflow = 'hidden';
-    style.paddingRight = `${self.scrollbarWidth}px`;
-    $.addClass(picker, 'picker-open');
+    if (!immediate) {
+      // Reflow to enable transition
+      // eslint-disable-next-line
+      picker.offsetWidth;
+    }
 
-    // Reflow to enable transition
-    // eslint-disable-next-line
-    picker.offsetWidth;
+    addClass(picker, CLASS_OPENED);
 
-    $.addClass(picker, 'picker-opened');
+    if (immediate) {
+      done();
+    } else {
+      setTimeout(done, 300);
+    }
 
-    setTimeout(() => {
-      $.dispatchEvent(element, 'shown');
-    }, 300);
-
-    return self;
+    return this;
   },
 
-  // Hide the picker.
-  hide() {
-    const self = this;
-    const element = self.element;
-    const picker = self.picker;
+  /**
+   * Hide the picker.
+   * @param {boolean} [immediate=false] - Indicate if hide the picker immediately or not.
+   * @returns {Picker} this
+   */
+  hide(immediate = false) {
+    const { element, picker } = this;
 
-    if (self.inline || !self.shown) {
-      return self;
+    if (this.inline || !this.shown) {
+      return this;
     }
 
-    if ($.dispatchEvent(element, 'hide') === false) {
-      return self;
+    if (dispatchEvent(element, EVENT_HIDE) === false) {
+      return this;
     }
 
-    self.shown = false;
-    $.removeClass(picker, 'picker-opened');
+    this.shown = false;
+    removeClass(picker, CLASS_OPENED);
 
-    setTimeout(() => {
-      const style = document.body.style;
+    const done = () => {
+      this.close();
+      removeClass(picker, CLASS_OPEN);
+      dispatchEvent(element, EVENT_HIDDEN);
+    };
 
-      $.removeClass(picker, 'picker-open');
+    if (immediate) {
+      done();
+    } else {
+      setTimeout(done, 300);
+    }
 
-      style.overflow = 'auto';
-      style.paddingRight = 0;
-
-      $.dispatchEvent(element, 'hidden');
-    }, 300);
-
-    return self;
+    return this;
   },
 
   /**
    * Pick to the previous item.
-   *
-   * @param {String} type
+   * @param {string} type - The column type.
+   * @returns {Picker} this
    */
   prev(type) {
-    const self = this;
-    const options = self.options;
-    const token = self.format[type];
-    const data = self.data[type];
-    const list = data.list;
+    const { options } = this;
+    const token = this.format[type];
+    const data = this.data[type];
+    const { list } = data;
     const item = list.lastElementChild;
-    const max = $.isFunction(data.max) ? data.max() : data.max;
-    const min = $.isFunction(data.min) ? data.min() : data.min;
+    const max = isFunction(data.max) ? data.max() : data.max;
+    const min = isFunction(data.min) ? data.min() : data.min;
     const prev = data.item.previousElementSibling;
-    let value = Number($.getData(list.firstElementChild, 'value')) - data.increment;
+    let value = Number(getData(list.firstElementChild, 'value')) - data.increment;
 
     if (value < min) {
       value += (max - min) + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
-      $.addLeadingZero(value + data.offset, token.length));
+      addLeadingZero(value + data.offset, token.length));
 
-    $.setData(item, 'value', value);
+    setData(item, 'value', value);
 
     if (prev) {
-      $.removeClass(data.item, 'picker-picked');
-      $.addClass(prev, 'picker-picked');
+      removeClass(data.item, CLASS_PICKED);
+      addClass(prev, CLASS_PICKED);
       data.item = prev;
     }
 
     list.insertBefore(item, list.firstElementChild);
+    data.current = Number(getData(data.item, 'value'));
+    this.current(type, data.current);
 
-    data.current = Number($.getData(data.item, 'value'));
-    self.current(type, data.current);
-
-    if (self.inline && options.container) {
-      self.pick();
+    if (this.inline && options.container) {
+      this.pick();
     }
 
-    return self;
+    return this;
   },
 
   /**
    * Pick to the next item.
-   *
-   * @param {String} type
+   * @param {String} type - The column type.
+   * @returns {Picker} this
    */
   next(type) {
-    const self = this;
-    const options = self.options;
-    const token = self.format[type];
-    const data = self.data[type];
-    const list = data.list;
+    const { options } = this;
+    const token = this.format[type];
+    const data = this.data[type];
+    const { list } = data;
     const item = list.firstElementChild;
-    const max = $.isFunction(data.max) ? data.max() : data.max;
-    const min = $.isFunction(data.min) ? data.min() : data.min;
+    const max = isFunction(data.max) ? data.max() : data.max;
+    const min = isFunction(data.min) ? data.min() : data.min;
     const next = data.item.nextElementSibling;
-    let value = Number($.getData(list.lastElementChild, 'value')) + data.increment;
+    let value = Number(getData(list.lastElementChild, 'value')) + data.increment;
 
     if (value > max) {
       value -= (max - min) + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
-      $.addLeadingZero(value + data.offset, token.length));
+      addLeadingZero(value + data.offset, token.length));
 
-    $.setData(item, 'value', value);
+    setData(item, 'value', value);
     list.appendChild(item);
 
     if (next) {
-      $.removeClass(data.item, 'picker-picked');
-      $.addClass(next, 'picker-picked');
+      removeClass(data.item, CLASS_PICKED);
+      addClass(next, CLASS_PICKED);
       data.item = next;
     }
 
-    data.current = Number($.getData(data.item, 'value'));
-    self.current(type, data.current);
+    data.current = Number(getData(data.item, 'value'));
+    this.current(type, data.current);
 
-    if (self.inline && options.container) {
-      self.pick();
+    if (this.inline && options.container) {
+      this.pick();
     }
 
-    return self;
+    return this;
   },
 
   // Pick the current date to the target element.
   pick() {
-    const self = this;
-    const element = self.element;
+    const { element } = this;
 
-    if ($.dispatchEvent(element, 'pick') === false) {
-      return self;
+    if (dispatchEvent(element, EVENT_PICK) === false) {
+      return this;
     }
 
-    const value = self.formatDate(self.date);
+    const value = this.formatDate(this.date);
 
-    self.setValue(value);
+    this.setValue(value);
 
-    if (self.isInput && $.dispatchEvent(element, 'change') === false) {
-      self.reset();
+    if (this.isInput && dispatchEvent(element, 'change') === false) {
+      this.reset();
     }
 
-    self.hide();
+    this.hide();
 
-    return self;
+    return this;
   },
 
   /**
    * Get the current date.
-   *
-   * @param {Boolean} [formatted]
-   * @return {Date|String} (date)
+   * @param {boolean} [formatted=false] - Indicate if format the date or not.
+   * @return {Date|string} The output date.
    */
-  getDate(formatted) {
-    const self = this;
-    const date = self.date;
+  getDate(formatted = false) {
+    const { date } = this;
 
-    return formatted ? self.formatDate(date) : new Date(date);
+    return formatted ? this.formatDate(date) : new Date(date);
   },
 
   /**
    * Override the current date with a new date.
-   *
-   * @param {Date|String} [date]
+   * @param {Date|string} date - The date to set.
+   * @returns {Picker} this
    */
   setDate(date) {
-    const self = this;
-
     if (date) {
-      self.date = self.parseDate(date);
-      self.render();
+      this.date = this.parseDate(date);
+      this.render();
     }
 
-    return self;
+    return this;
   },
 
   // Update the picker with the current element value / text.
   update() {
-    const self = this;
+    this.date = this.parseDate(this.getValue());
+    this.render();
 
-    self.date = self.parseDate(self.getValue());
-    self.render();
-
-    return self;
+    return this;
   },
 
   // Reset the picker and element value / text.
   reset() {
-    const self = this;
+    this.setValue(this.initialValue);
+    this.date = new Date(this.initialDate);
+    this.render();
 
-    self.setValue(self.initialValue);
-    self.date = new Date(self.initialDate);
-    self.render();
-
-    return self;
+    return this;
   },
 
   /**
-   * Parse a date string with the set date format.
-   *
-   * @param {String} date
-   * @return {Date} (parsed date)
+   * Parse a date with the set date format.
+   * @param {Date|string} date - The date to parse.
+   * @returns {Date} The parsed date object.
    */
   parseDate(date) {
-    const self = this;
-    const options = self.options;
-    const format = self.format;
+    const { options, format } = this;
     let digits = [];
 
-    if ($.isDate(date)) {
+    if (isDate(date)) {
       return new Date(date);
     }
 
-    if (typeof date === 'string') {
-      const months = options.months.join('|');
-      const monthsShort = options.monthsShort.join('|');
+    if (isString(date)) {
+      const groups = [
+        ...options.months,
+        ...options.monthsShort,
+        '\\d+',
+      ];
 
-      digits = date.match(new RegExp(`(${months}|${monthsShort}|\\d+)`, 'g'));
+      digits = date.match(new RegExp(`(${groups.join('|')})`, 'g'));
+
+      // Parse `11111111` (YYYYMMDD) to ['1111', '11', '11']
+      if (digits && (date.length === options.format.length
+        && digits.length !== format.tokens.length)) {
+        digits = format.tokens.map(token => date.substr(
+          options.format.indexOf(token),
+          token.length,
+        ));
+      }
 
       if (!digits || digits.length !== format.tokens.length) {
         return new Date();
@@ -309,7 +338,7 @@ export default {
           parsedDate.setMilliseconds(n);
           break;
 
-        // No default
+        default:
       }
     });
 
@@ -318,17 +347,14 @@ export default {
 
   /**
    * Format a date object to a string with the set date format.
-   *
-   * @param {Date} date
-   * @return {String} (formatted date)
+   * @param {Date} date - The date to format.
+   * @return {string} THe formatted date.
    */
   formatDate(date) {
-    const self = this;
-    const options = self.options;
-    const format = self.format;
+    const { options, format } = this;
     let formatted = '';
 
-    if ($.isValidDate(date)) {
+    if (isValidDate(date)) {
       const year = date.getFullYear();
       const month = date.getMonth();
       const day = date.getDate();
@@ -346,11 +372,11 @@ export default {
           case 'YYYY':
           case 'YYY':
           case 'Y':
-            replacement = $.addLeadingZero(year, token.length);
+            replacement = addLeadingZero(year, token.length);
             break;
 
           case 'YY':
-            replacement = $.addLeadingZero(year % 100, 2);
+            replacement = addLeadingZero(year % 100, 2);
             break;
 
           case 'MMMM':
@@ -363,37 +389,36 @@ export default {
 
           case 'MM':
           case 'M':
-            replacement = $.addLeadingZero(month + 1, token.length);
+            replacement = addLeadingZero(month + 1, token.length);
             break;
 
           case 'DD':
           case 'D':
-            replacement = $.addLeadingZero(day, token.length);
+            replacement = addLeadingZero(day, token.length);
             break;
 
           case 'HH':
           case 'H':
-            replacement = $.addLeadingZero(hours, token.length);
+            replacement = addLeadingZero(hours, token.length);
             break;
 
           case 'mm':
           case 'm':
-            replacement = $.addLeadingZero(minutes, token.length);
+            replacement = addLeadingZero(minutes, token.length);
             break;
 
           case 'ss':
           case 's':
-            replacement = $.addLeadingZero(seconds, token.length);
+            replacement = addLeadingZero(seconds, token.length);
             break;
 
           case 'SSS':
           case 'SS':
           case 'S':
-            replacement = $.addLeadingZero(milliseconds, token.length);
+            replacement = addLeadingZero(milliseconds, token.length);
             break;
 
-          // No default
-
+          default:
         }
 
         formatted = formatted.replace(token, replacement);
@@ -405,14 +430,16 @@ export default {
 
   // Destroy the picker and remove the instance from the target element.
   destroy() {
-    const self = this;
-    const element = self.element;
-    const picker = self.picker;
+    const { element, picker } = this;
 
-    self.unbind();
-    $.removeData(element, 'picker');
+    if (!getData(element, NAMESPACE)) {
+      return this;
+    }
+
+    this.hide(true);
+    this.unbind();
+    removeData(element, NAMESPACE);
     picker.parentNode.removeChild(picker);
-
-    return self;
+    return this;
   },
 };

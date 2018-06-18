@@ -14,7 +14,7 @@ export default {
   // Enable inline mode.
   inline: false,
 
-  // Define the language. (An ISO language code)
+  // Define the language. (An ISO language code).
   language: '',
 
   // Months' name.
@@ -49,11 +49,6 @@ export default {
     'Dec',
   ],
 
-  // Translate date / time text.
-  translate(type, text) {
-    return text;
-  },
-
   // Define the number of rows for showing.
   rows: 5,
 
@@ -64,7 +59,12 @@ export default {
     confirm: 'OK',
   },
 
-  // Shortcuts of custom events
+  // Translate date / time text.
+  translate(type, text) {
+    return text;
+  },
+
+  // Shortcuts of custom events.
   show: null,
   shown: null,
   hide: null,

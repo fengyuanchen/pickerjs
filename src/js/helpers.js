@@ -1,29 +1,39 @@
-import * as $ from './utilities';
+import {
+  CLASS_PICKED,
+  NAMESPACE,
+} from './constants';
+import {
+  addClass,
+  addLeadingZero,
+  isFinite,
+  isFunction,
+  isNumber,
+  setData,
+  tokenToType,
+} from './utilities';
 
 export default {
   render(type) {
-    const self = this;
-
     if (!type) {
-      self.format.tokens.forEach(token => self.render($.tokenToType(token)));
+      this.format.tokens.forEach(token => this.render(tokenToType(token)));
       return;
     }
 
-    const options = self.options;
-    const data = self.data[type];
-    const current = self.current(type);
-    const max = $.isFunction(data.max) ? data.max() : data.max;
-    const min = $.isFunction(data.min) ? data.min() : data.min;
+    const { options } = this;
+    const data = this.data[type];
+    const current = this.current(type);
+    const max = isFunction(data.max) ? data.max() : data.max;
+    const min = isFunction(data.min) ? data.min() : data.min;
     let base = 0;
 
     if (isFinite(max)) {
       base = min > 0 ? max : max + 1;
     }
 
-    $.empty(data.list);
+    data.list.innerHTML = '';
     data.current = current;
 
-    for (let i = 0; i < options.rows + 2; i++) {
+    for (let i = 0; i < options.rows + 2; i += 1) {
       const item = document.createElement('li');
       const position = i - data.index;
       let newValue = current + (position * data.increment);
@@ -37,14 +47,14 @@ export default {
       }
 
       item.textContent = options.translate(type, data.aliases ? data.aliases[newValue] :
-        $.addLeadingZero(newValue + data.offset, data.digit));
+        addLeadingZero(newValue + data.offset, data.digit));
 
-      $.setData(item, 'name', type);
-      $.setData(item, 'value', newValue);
-      $.addClass(item, 'picker-item');
+      setData(item, 'name', type);
+      setData(item, 'value', newValue);
+      addClass(item, `${NAMESPACE}-item`);
 
       if (position === 0) {
-        $.addClass(item, 'picker-picked');
+        addClass(item, CLASS_PICKED);
         data.item = item;
       }
 
@@ -53,94 +63,105 @@ export default {
   },
 
   current(type, value) {
-    const self = this;
-    const date = self.date;
-    const format = self.format;
+    const { date } = this;
+    const { format } = this;
     const token = format[type];
 
     switch (token.charAt(0)) {
       case 'Y':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setFullYear(token.length === 2 ? (2000 + value) : value);
 
           if (format.month) {
-            self.render($.tokenToType(format.month));
+            this.render(tokenToType(format.month));
           }
 
           if (format.day) {
-            self.render($.tokenToType(format.day));
+            this.render(tokenToType(format.day));
           }
         }
 
         return date.getFullYear();
 
       case 'M':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setMonth(value);
 
           if (format.day) {
-            self.render($.tokenToType(format.day));
+            this.render(tokenToType(format.day));
           }
         }
 
         return date.getMonth();
 
       case 'D':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setDate(value);
         }
 
         return date.getDate();
 
       case 'H':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setHours(value);
         }
 
         return date.getHours();
 
       case 'm':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setMinutes(value);
         }
 
         return date.getMinutes();
 
       case 's':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setSeconds(value);
         }
 
         return date.getSeconds();
 
       case 'S':
-        if ($.isNumber(value)) {
+        if (isNumber(value)) {
           date.setMilliseconds(value);
         }
 
         return date.getMilliseconds();
 
-      // No default
+      default:
     }
 
     return date;
   },
 
   getValue() {
-    const self = this;
-    const element = self.element;
+    const { element } = this;
 
-    return self.isInput ? element.value : element.textContent;
+    return this.isInput ? element.value : element.textContent;
   },
 
   setValue(value) {
-    const self = this;
-    const element = self.element;
+    const { element } = this;
 
-    if (self.isInput) {
+    if (this.isInput) {
       element.value = value;
-    } else if (self.options.container) {
+    } else if (this.options.container) {
       element.textContent = value;
     }
+  },
+
+  open() {
+    const { body } = this;
+
+    body.style.overflow = 'hidden';
+    body.style.paddingRight = `${this.scrollBarWidth + (parseFloat(this.initialBodyPaddingRight) || 0)}px`;
+  },
+
+  close() {
+    const { body } = this;
+
+    body.style.overflow = '';
+    body.style.paddingRight = this.initialBodyPaddingRight;
   },
 };

@@ -1,4 +1,4 @@
-import * as $ from './utilities';
+import { getData } from './utilities';
 
 export default {
   focus(e) {
@@ -7,7 +7,7 @@ export default {
   },
 
   click(e) {
-    const action = $.getData(e.target, 'action');
+    const action = getData(e.target, 'action');
 
     if (action === 'hide') {
       this.hide();
@@ -17,10 +17,9 @@ export default {
   },
 
   wheel(e) {
-    const self = this;
-    let target = e.target;
+    let { target } = e;
 
-    if (target === self.grid) {
+    if (target === this.grid) {
       return;
     }
 
@@ -34,20 +33,19 @@ export default {
       target = target.parentNode;
     }
 
-    const type = $.getData(target, 'type');
+    const type = getData(target, 'type');
 
     if (e.deltaY < 0) {
-      self.prev(type);
+      this.prev(type);
     } else {
-      self.next(type);
+      this.next(type);
     }
   },
 
   pointerdown(e) {
-    const self = this;
-    let target = e.target;
+    let { target } = e;
 
-    if (target === self.grid) {
+    if (target === this.grid) {
       return;
     }
 
@@ -65,20 +63,19 @@ export default {
     const list = target.firstElementChild;
     const itemHeight = list.firstElementChild.offsetHeight;
 
-    self.cell = {
+    this.cell = {
       elem: target,
       list,
       moveY: 0,
       maxMoveY: itemHeight,
       minMoveY: itemHeight / 2,
       startY: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
-      type: $.getData(target, 'type'),
+      type: getData(target, 'type'),
     };
   },
 
   pointermove(e) {
-    const self = this;
-    const cell = self.cell;
+    const { cell } = this;
 
     if (!cell) {
       return;
@@ -101,38 +98,34 @@ export default {
     cell.moveY = 0;
 
     if (moveY >= cell.maxMoveY) {
-      self.prev(cell.type);
+      this.prev(cell.type);
     } else if (moveY <= -cell.maxMoveY) {
-      self.next(cell.type);
+      this.next(cell.type);
     }
   },
 
   pointerup(e) {
-    const self = this;
-    const cell = self.cell;
+    const { cell } = this;
 
     if (!cell) {
       return;
     }
 
     e.preventDefault();
-
     cell.list.style.top = 0;
 
     if (cell.moveY >= cell.minMoveY) {
-      self.prev(cell.type);
+      this.prev(cell.type);
     } else if (cell.moveY <= -cell.minMoveY) {
-      self.next(cell.type);
+      this.next(cell.type);
     }
 
-    self.cell = null;
+    this.cell = null;
   },
 
   keydown(e) {
-    const self = this;
-
-    if (self.shown && (e.key === 'Escape' || e.keyCode === 27)) {
-      self.hide();
+    if (this.shown && (e.key === 'Escape' || e.keyCode === 27)) {
+      this.hide();
     }
   },
 };

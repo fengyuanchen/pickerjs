@@ -4,88 +4,115 @@ import events from './events';
 import handlers from './handlers';
 import helpers from './helpers';
 import methods from './methods';
-import * as $ from './utilities';
+import {
+  CLASS_OPEN,
+  CLASS_OPENED,
+  LANGUAGES,
+  NAMESPACE,
+  WINDOW,
+} from './constants';
+import {
+  addClass,
+  deepAssign,
+  getData,
+  getDaysInMonth,
+  isPlainObject,
+  isString,
+  parseFormat,
+  setData,
+  tokenToType,
+} from './utilities';
 
-const LANGUAGES = {};
 const REGEXP_DELIMITER = /\{\{\s*(\w+)\s*\}\}/g;
 const REGEXP_INPUTS = /input|textarea/i;
-let AnotherPicker;
+const AnotherPicker = WINDOW.Picker;
 
 class Picker {
-  constructor(element, options) {
-    const self = this;
-
-    options = $.isPlainObject(options) ? options : {};
-
-    if (options.language) {
-      // Priority: DEFAULTS < LANGUAGES < options
-      options = $.extend(true, {}, LANGUAGES[options.language], options);
+  /**
+   * Create a new Picker.
+   * @param {Element} element - The target element for picking.
+   * @param {Object} [options={}] - The configuration options.
+   */
+  constructor(element, options = {}) {
+    if (!element || element.nodeType !== 1) {
+      throw new Error('The first argument is required and must be an element.');
     }
 
-    self.element = element;
-    self.options = $.extend(true, {}, DEFAULTS, options);
-    self.shown = false;
-    self.init();
+    this.element = element;
+    this.options = deepAssign(
+      {},
+      DEFAULTS,
+      LANGUAGES[options.language],
+      isPlainObject(options) && options,
+    );
+    console.log(this.options, DEFAULTS);
+    this.shown = false;
+    this.init();
   }
 
   init() {
-    const self = this;
-    const element = self.element;
+    const { element } = this;
 
-    if ($.getData(element, 'picker')) {
+    if (getData(element, NAMESPACE)) {
       return;
     }
 
-    $.setData(element, 'picker', self);
+    setData(element, NAMESPACE, this);
 
-    const options = self.options;
+    const { options } = this;
     const isInput = REGEXP_INPUTS.test(element.tagName);
     const inline = options.inline && (options.container || !isInput);
     const template = document.createElement('div');
 
-    template.insertAdjacentHTML('afterbegin',
-      TEMPLATE.replace(REGEXP_DELIMITER, (...args) => options.text[args[1]]));
+    template.insertAdjacentHTML(
+      'afterbegin',
+      TEMPLATE.replace(REGEXP_DELIMITER, (...args) => options.text[args[1]]),
+    );
 
-    const picker = template.getElementsByClassName('picker')[0];
-    const grid = picker.getElementsByClassName('picker-grid')[0];
-    let container = options.container;
+    const picker = template.getElementsByClassName(NAMESPACE)[0];
+    const grid = picker.getElementsByClassName(`${NAMESPACE}-grid`)[0];
+    let { container } = options;
 
-    if (typeof container === 'string') {
+    if (isString(container)) {
       container = document.querySelector(container);
     }
 
     if (inline) {
-      $.addClass(picker, 'picker-open');
-      $.addClass(picker, 'picker-opened');
+      addClass(picker, CLASS_OPEN);
+      addClass(picker, CLASS_OPENED);
 
       if (!container) {
         container = element;
       }
     } else {
-      self.scrollbarWidth = window.innerWidth - document.body.clientWidth;
+      const { ownerDocument } = element;
+      const body = ownerDocument.body || ownerDocument.documentElement;
 
-      $.addClass(picker, 'picker-fixed');
+      this.body = body;
+      this.scrollBarWidth = WINDOW.innerWidth - ownerDocument.documentElement.clientWidth;
+      this.initialBodyPaddingRight = WINDOW.getComputedStyle(body).paddingRight;
+      addClass(picker, `${NAMESPACE}-fixed`);
 
       if (!container) {
         container = document.body;
       }
     }
 
-    self.isInput = isInput;
-    self.inline = inline;
-    self.container = container;
-    self.picker = picker;
-    self.grid = grid;
-    self.cell = null;
-    self.format = $.parseFormat(options.format);
+    this.isInput = isInput;
+    this.inline = inline;
+    this.container = container;
+    this.picker = picker;
+    this.grid = grid;
+    this.cell = null;
+    this.format = parseFormat(options.format);
 
-    const initialValue = self.getValue();
-    const date = self.parseDate(options.date || initialValue);
+    const initialValue = this.getValue();
+    const date = this.parseDate(options.date || initialValue);
 
-    self.date = date;
-    self.initialDate = new Date(date);
-    self.initialValue = initialValue;
-    self.data = {};
+    this.date = date;
+    this.initialDate = new Date(date);
+    this.initialValue = initialValue;
+    this.data = {};
 
     let rows = Number(options.rows);
 
@@ -94,11 +121,11 @@ class Picker {
     }
 
     options.rows = rows || 5;
-    $.addClass(grid, rows > 1 ? 'picker-multiple' : 'picker-single');
+    addClass(grid, rows > 1 ? `${NAMESPACE}-multiple` : `${NAMESPACE}-single`);
 
-    let increment = options.increment;
+    let { increment } = options;
 
-    if (!$.isPlainObject(increment)) {
+    if (!isPlainObject(increment)) {
       increment = {
         year: increment,
         month: increment,
@@ -110,8 +137,8 @@ class Picker {
       };
     }
 
-    self.format.tokens.forEach((token) => {
-      const type = $.tokenToType(token);
+    this.format.tokens.forEach((token) => {
+      const type = tokenToType(token);
       const cell = document.createElement('div');
       const list = document.createElement('ul');
       const data = {
@@ -145,9 +172,7 @@ class Picker {
           break;
 
         case 'D':
-          data.max = () => {
-            return $.getDaysInMonth(date.getFullYear(), date.getMonth());
-          };
+          data.max = () => getDaysInMonth(date.getFullYear(), date.getMonth());
           data.min = 1;
           break;
 
@@ -171,54 +196,47 @@ class Picker {
           data.min = 0;
           break;
 
-        // No default
+        default:
       }
 
-      $.setData(cell, 'type', type);
-      $.setData(cell, 'token', token);
-      $.addClass(list, 'picker-list');
-      $.addClass(cell, 'picker-cell');
-      $.addClass(cell, `picker-${type}s`);
+      setData(cell, 'type', type);
+      setData(cell, 'token', token);
+      addClass(list, `${NAMESPACE}-list`);
+      addClass(cell, `${NAMESPACE}-cell`);
+      addClass(cell, `${NAMESPACE}-${type}s`);
       cell.appendChild(list);
       grid.appendChild(cell);
-      self.data[type] = data;
-      self.render(type);
+      this.data[type] = data;
+      this.render(type);
     });
 
     if (inline) {
-      $.empty(container);
+      container.innerHTML = '';
     }
 
     container.appendChild(picker);
-    self.bind();
+    this.bind();
   }
 
+  /**
+   * Get the no conflict picker class.
+   * @returns {Picker} The picker class.
+   */
   static noConflict() {
-    window.Picker = AnotherPicker;
+    WINDOW.Picker = AnotherPicker;
     return Picker;
   }
 
+  /**
+   * Change the default options.
+   * @param {Object} options - The new default options.
+   */
   static setDefaults(options) {
-    options = $.isPlainObject(options) ? options : {};
-
-    if (options.language) {
-      options = $.extend(true, {}, LANGUAGES[options.language], options);
-    }
-
-    $.extend(true, DEFAULTS, options);
+    deepAssign(DEFAULTS, LANGUAGES[options.language], isPlainObject(options) && options);
   }
 }
 
-$.extend(Picker.prototype, events);
-$.extend(Picker.prototype, handlers);
-$.extend(Picker.prototype, helpers);
-$.extend(Picker.prototype, methods);
-
+deepAssign(Picker.prototype, events, handlers, helpers, methods);
 Picker.languages = LANGUAGES;
-
-if (typeof window !== 'undefined') {
-  AnotherPicker = window.Picker;
-  window.Picker = Picker;
-}
 
 export default Picker;
