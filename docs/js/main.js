@@ -5,19 +5,19 @@ window.onload = function () {
   var input = document.querySelector('.docs-date');
   var pickerContainer = document.querySelector('.docs-picker-container');
   var options = {
-    show:  function (e) {
+    show: function (e) {
       console.log(e.type);
     },
-    shown:  function (e) {
+    shown: function (e) {
       console.log(e.type);
     },
-    hide:  function (e) {
+    hide: function (e) {
       console.log(e.type);
     },
-    hidden:  function (e) {
+    hidden: function (e) {
       console.log(e.type);
     },
-    pick:  function (e) {
+    pick: function (e) {
       console.log(e.type);
     }
   };
