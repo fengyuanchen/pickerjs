@@ -45,7 +45,6 @@ class Picker {
       LANGUAGES[options.language],
       isPlainObject(options) && options,
     );
-    console.log(this.options, DEFAULTS);
     this.shown = false;
     this.init();
   }
