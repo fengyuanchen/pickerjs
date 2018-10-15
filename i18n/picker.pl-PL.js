@@ -5,7 +5,7 @@
 }(this, (function (Picker) {
   'use strict';
 
-  Picker.languages['pl_PL'] = {
+  Picker.languages['pl-PL'] = {
     months: [
       'Styczeń',
       'Luty',
