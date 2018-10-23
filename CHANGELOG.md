@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-rc (Oct 23, 2018)
+
+- Add polish localization (#13).
+- Fix wrong maximum day when month change (#15, #16).
+
 ## 1.0.0-beta (Jun 18, 2018)
 
 - Refactor the core code.
