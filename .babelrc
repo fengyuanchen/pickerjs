@@ -1,11 +1,17 @@
 {
   "presets": [
-    ["env", {
-      "modules": false
-    }],
-    "stage-0"
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ]
   ],
-  "plugins": [
-    "external-helpers"
-  ]
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  }
 }
