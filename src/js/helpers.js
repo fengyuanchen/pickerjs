@@ -5,6 +5,7 @@ import {
 import {
   addClass,
   addLeadingZero,
+  getDaysInMonth,
   isFinite,
   isFunction,
   isNumber,
@@ -85,7 +86,12 @@ export default {
 
       case 'M':
         if (isNumber(value)) {
-          date.setMonth(value);
+          date.setMonth(
+            value,
+
+            // The current day should not exceed its maximum day in current month
+            Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), value))
+          );
 
           if (format.day) {
             this.render(tokenToType(format.day));
