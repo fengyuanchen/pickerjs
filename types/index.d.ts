@@ -49,6 +49,8 @@ declare class Picker {
   setDate(date: Date): Picker;
   show(): Picker;
   update(): Picker;
+  static noConflict(): Picker;
+  static setDefaults(options: Picker.Options): void;
 }
 
 declare module 'pickerjs' {
