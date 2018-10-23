@@ -156,9 +156,9 @@ export function deepAssign(target, ...sources) {
  * @returns {boolean} Returns `true` if the special class was found.
  */
 export function hasClass(element, value) {
-  return element.classList ?
-    element.classList.contains(value) :
-    element.className.indexOf(value) > -1;
+  return element.classList
+    ? element.classList.contains(value)
+    : element.className.indexOf(value) > -1;
 }
 
 /**
@@ -265,7 +265,9 @@ export function hyphenate(value) {
 export function getData(element, name) {
   if (isObject(element[name])) {
     return element[name];
-  } else if (element.dataset) {
+  }
+
+  if (element.dataset) {
     return element.dataset[name];
   }
 

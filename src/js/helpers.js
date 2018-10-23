@@ -47,8 +47,8 @@ export default {
         }
       }
 
-      item.textContent = options.translate(type, data.aliases ? data.aliases[newValue] :
-        addLeadingZero(newValue + data.offset, data.digit));
+      item.textContent = options.translate(type, data.aliases ? data.aliases[newValue]
+        : addLeadingZero(newValue + data.offset, data.digit));
 
       setData(item, 'name', type);
       setData(item, 'value', newValue);

@@ -119,8 +119,8 @@ export default {
       value += (max - min) + 1;
     }
 
-    item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
-      addLeadingZero(value + data.offset, token.length));
+    item.textContent = options.translate(type, data.aliases ? data.aliases[value]
+      : addLeadingZero(value + data.offset, token.length));
 
     setData(item, 'value', value);
 
@@ -161,8 +161,8 @@ export default {
       value -= (max - min) + 1;
     }
 
-    item.textContent = options.translate(type, data.aliases ? data.aliases[value] :
-      addLeadingZero(value + data.offset, token.length));
+    item.textContent = options.translate(type, data.aliases ? data.aliases[value]
+      : addLeadingZero(value + data.offset, token.length));
 
     setData(item, 'value', value);
     list.appendChild(item);
