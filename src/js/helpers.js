@@ -90,7 +90,7 @@ export default {
             value,
 
             // The current day should not exceed its maximum day in current month
-            Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), value))
+            Math.min(date.getDate(), getDaysInMonth(date.getFullYear(), value)),
           );
 
           if (format.day) {
