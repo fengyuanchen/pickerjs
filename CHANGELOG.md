@@ -1,5 +1,9 @@
 # Changelog
 
+## next
+
+- Fix wrong BC year detecting when the date string has a `-` before year digits (#17).
+
 ## 1.0.0-rc (Oct 23, 2018)
 
 - Add polish localization (#13).

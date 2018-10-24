@@ -291,9 +291,14 @@ export default {
       switch (token) {
         case 'YYYY':
         case 'YYY':
-        case 'Y':
-          parsedDate.setFullYear(date.substr(date.indexOf(digit) - 1, 1) === '-' ? -n : n);
+        case 'Y': {
+          const index = date.indexOf(digit);
+          const isBC = (index > 1 && /\D/.test(date.substr(index - 2, 1)))
+            || (index === 1 && date.substr(index - 1, 1) === '-');
+
+          parsedDate.setFullYear(isBC ? -n : n);
           break;
+        }
 
         case 'YY':
           parsedDate.setFullYear(2000 + n);
