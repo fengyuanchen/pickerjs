@@ -1,6 +1,6 @@
 # Changelog
 
-## next
+## 1.0.0 (Oct 25, 2018)
 
 - Fix wrong BC year detecting when the date string has a `-` before year digits (#17).
 

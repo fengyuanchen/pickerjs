@@ -1,11 +1,11 @@
 /*!
- * Picker.js v1.0.0-rc
+ * Picker.js v1.0.0
  * https://fengyuanchen.github.io/pickerjs
  *
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2018-10-23T13:45:42.568Z
+ * Date: 2018-10-25T11:27:11.156Z
  */
 
 'use strict';
@@ -1217,8 +1217,12 @@ var methods = {
         case 'YYYY':
         case 'YYY':
         case 'Y':
-          parsedDate.setFullYear(date.substr(date.indexOf(digit) - 1, 1) === '-' ? -n : n);
-          break;
+          {
+            var index = date.indexOf(digit);
+            var isBC = index > 1 && /\D/.test(date.substr(index - 2, 1)) || index === 1 && date.substr(index - 1, 1) === '-';
+            parsedDate.setFullYear(isBC ? -n : n);
+            break;
+          }
 
         case 'YY':
           parsedDate.setFullYear(2000 + n);
