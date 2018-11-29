@@ -9,7 +9,7 @@ describe('showGridHeaders (option)', () => {
   it('should be hidden by default element', () => {
     const container = window.createContainer();
     const input = window.createInput();
-    const picker = new Picker(input, {
+    new Picker(input, {
       container,
     });
 
@@ -18,7 +18,7 @@ describe('showGridHeaders (option)', () => {
   it('should render header when showGridHeaders is true', () => {
     const container = window.createContainer();
     const input = window.createInput();
-    const picker = new Picker(input, {
+    new Picker(input, {
       container,
       showGridHeaders:true
     });
