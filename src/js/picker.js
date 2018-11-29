@@ -88,7 +88,7 @@ class Picker {
       if (!container) {
         container = element;
       }
-    } else { // ssssxssssss
+    } else { 
       const { ownerDocument } = element;
       const body = ownerDocument.body || ownerDocument.documentElement;
 
