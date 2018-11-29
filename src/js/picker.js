@@ -70,11 +70,12 @@ class Picker {
 
     const picker = template.getElementsByClassName(NAMESPACE)[0];
     const grid = picker.getElementsByClassName(`${NAMESPACE}-grid`)[0];
-    const gridColumnDescription = picker.getElementsByClassName(`picker-column-description`)[0];
-    let { container, showGridHeaders } = options;
+    const gridColumnDescription = picker.getElementsByClassName('picker-column-description')[0];
+    let { container } = options;
+    const { showGridHeaders } = options;
 
-    if(showGridHeaders) {
-      gridColumnDescription.classList.remove("invisible");
+    if (showGridHeaders) {
+      gridColumnDescription.classList.remove('invisible');
     }
     if (isString(container)) {
       container = document.querySelector(container);
@@ -87,7 +88,7 @@ class Picker {
       if (!container) {
         container = element;
       }
-    } else {//ssssxssssss
+    } else { // ssssxssssss
       const { ownerDocument } = element;
       const body = ownerDocument.body || ownerDocument.documentElement;
 
