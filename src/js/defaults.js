@@ -17,6 +17,9 @@ export default {
   // Define the language. (An ISO language code).
   language: '',
 
+  // Shows headers like year/Month/Day/Hour/Minute
+  showGridHeaders:false,
+
   // Months' name.
   months: [
     'January',
@@ -57,6 +60,15 @@ export default {
     title: 'Pick a date / time',
     cancel: 'Cancel',
     confirm: 'OK',
+  },
+  gridHeader:{
+    year:"Year",
+    month:"Month",
+    day:"Day",
+    hour:"Hour",
+    minute:"Minute",
+    second:"Second",
+    milisecond:"Milisecond"
   },
 
   // Translate date / time text.

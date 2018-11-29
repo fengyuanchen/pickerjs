@@ -70,8 +70,12 @@ class Picker {
 
     const picker = template.getElementsByClassName(NAMESPACE)[0];
     const grid = picker.getElementsByClassName(`${NAMESPACE}-grid`)[0];
-    let { container } = options;
+    const gridColumnDescription = picker.getElementsByClassName(`picker-column-description`)[0];
+    let { container, showGridHeaders } = options;
 
+    if(showGridHeaders) {
+      gridColumnDescription.classList.remove("invisible");
+    }
     if (isString(container)) {
       container = document.querySelector(container);
     }
@@ -83,7 +87,7 @@ class Picker {
       if (!container) {
         container = element;
       }
-    } else {
+    } else {//ssssxssssss
       const { ownerDocument } = element;
       const body = ownerDocument.body || ownerDocument.documentElement;
 
@@ -102,6 +106,7 @@ class Picker {
     this.container = container;
     this.picker = picker;
     this.grid = grid;
+    this.gridColumnDescription = gridColumnDescription;
     this.cell = null;
     this.format = parseFormat(options.format);
 
@@ -140,6 +145,7 @@ class Picker {
       const type = tokenToType(token);
       const cell = document.createElement('div');
       const list = document.createElement('ul');
+      const columnDescription = document.createElement('div');
       const data = {
         digit: token.length,
         increment: Math.abs(Number(increment[type])) || 1,
@@ -156,6 +162,7 @@ class Picker {
             data.max = 99;
             data.min = 0;
           }
+          columnDescription.textContent = options.gridHeader.year;
           break;
 
         case 'M':
@@ -168,31 +175,37 @@ class Picker {
           } else if (data.digit === 4) {
             data.aliases = options.months;
           }
+          columnDescription.textContent = options.gridHeader.month;
           break;
 
         case 'D':
           data.max = () => getDaysInMonth(date.getFullYear(), date.getMonth());
           data.min = 1;
+          columnDescription.textContent = options.gridHeader.day;
           break;
 
         case 'H':
           data.max = 23;
           data.min = 0;
+          columnDescription.textContent = options.gridHeader.hour;
           break;
 
         case 'm':
           data.max = 59;
           data.min = 0;
+          columnDescription.textContent = options.gridHeader.minute;
           break;
 
         case 's':
           data.max = 59;
           data.min = 0;
+          columnDescription.textContent = options.gridHeader.second;
           break;
 
         case 'S':
           data.max = 999;
           data.min = 0;
+          columnDescription.textContent = options.gridHeader.milisecond;
           break;
 
         default:
@@ -203,7 +216,9 @@ class Picker {
       addClass(list, `${NAMESPACE}-list`);
       addClass(cell, `${NAMESPACE}-cell`);
       addClass(cell, `${NAMESPACE}-${type}s`);
+      addClass(columnDescription, 'picker-column-cell-description');
       cell.appendChild(list);
+      gridColumnDescription.appendChild(columnDescription);
       grid.appendChild(cell);
       this.data[type] = data;
       this.render(type);
