@@ -1,5 +1,6 @@
 :root {
   --gray: #999;
+  --grid-column-desc: #efefef;
   --blue: #0074d9;
   --color: #333;
   --background-color: #fff;
@@ -103,6 +104,7 @@
 
 .picker-grid {
   display: table;
+  table-layout: fixed;
   margin-bottom: -2.5rem;
   margin-top: -2.5rem;
   width: 100%;
@@ -194,4 +196,21 @@
 
 .picker-confirm {
   color: var(--blue);
+}
+
+.picker-column-description {
+  background-color: var(--grid-column-desc);
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.picker-column-cell-description {
+  padding: .5em;
+  display: table-cell;
+  text-align: center;
+  background-image: url(./up.png);
+}
+.invisible {
+  display: none;
 }

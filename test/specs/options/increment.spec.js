@@ -16,8 +16,11 @@ describe('increment (option)', () => {
       increment,
     });
 
+    var futureMonth = new Date();
+    futureMonth.setMonth(futureMonth.getMonth() + increment);
+
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="year"]').nextElementSibling.dataset.value)).to.equal(date.getFullYear() + increment);
-    expect(Number(picker.picker.querySelector('.picker-picked[data-name="month"]').nextElementSibling.dataset.value)).to.equal(date.getMonth() + increment);
+    expect(Number(picker.picker.querySelector('.picker-picked[data-name="month"]').nextElementSibling.dataset.value)).to.equal(futureMonth.getMonth());
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="day"]').nextElementSibling.dataset.value)).to.equal(date.getDate() + increment);
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="hour"]').nextElementSibling.dataset.value)).to.equal(date.getHours() + increment);
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="minute"]').nextElementSibling.dataset.value)).to.equal(date.getMinutes() + increment);
@@ -43,8 +46,11 @@ describe('increment (option)', () => {
       },
     });
 
+    var futureMonth = new Date();
+    futureMonth.setMonth(futureMonth.getMonth() + increment);
+
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="year"]').nextElementSibling.dataset.value)).to.equal(date.getFullYear() + increment);
-    expect(Number(picker.picker.querySelector('.picker-picked[data-name="month"]').nextElementSibling.dataset.value)).to.equal(date.getMonth() + increment);
+    expect(Number(picker.picker.querySelector('.picker-picked[data-name="month"]').nextElementSibling.dataset.value)).to.equal(futureMonth.getMonth());
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="day"]').nextElementSibling.dataset.value)).to.equal(date.getDate() + increment);
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="hour"]').nextElementSibling.dataset.value)).to.equal(date.getHours() + increment);
     expect(Number(picker.picker.querySelector('.picker-picked[data-name="minute"]').nextElementSibling.dataset.value)).to.equal(date.getMinutes() + increment);

@@ -5,6 +5,8 @@ export default (
         + '<h4 class="picker-title">{{ title }}</h4>'
         + '<button type="button" class="picker-close" data-action="hide" aria-label="Close">&times;</button>'
       + '</div>'
+      + '<div class="picker-column-description invisible">'
+      + '</div>'
       + '<div class="picker-body">'
         + '<div class="picker-grid"></div>'
       + '</div>'
