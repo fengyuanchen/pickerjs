@@ -1,10 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('pickerjs')) :
-  typeof define === 'function' && define.amd ? define(['pickerjs'], factory) :
-  (factory(global.Picker));
-}(this, (function (Picker) {
-  'use strict';
-
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('pickerjs'))
+    : typeof define === 'function' && define.amd ? define(['pickerjs'], factory)
+      : (factory(global.Picker));
+}(this, ((Picker) => {
   Picker.languages['zh-CN'] = {
     months: [
       '一月',
@@ -38,6 +36,6 @@
       title: '请选择日期',
       cancel: '取消',
       confirm: '确认'
-    }
+    },
   };
 })));

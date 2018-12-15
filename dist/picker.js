@@ -1,11 +1,11 @@
 /*!
- * Picker.js v1.0.0
+ * Picker.js v1.1.0
  * https://fengyuanchen.github.io/pickerjs
  *
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2018-10-25T11:27:11.156Z
+ * Date: 2018-12-15T09:03:15.534Z
  */
 
 (function (global, factory) {
@@ -77,6 +77,8 @@
     date: null,
     // The date string format, also as the sorting order for columns.
     format: 'YYYY-MM-DD HH:mm',
+    // Indicate whether show the column headers or customize column headers
+    headers: false,
     // Define the increment for each date / time part.
     increment: 1,
     // Enable inline mode.
@@ -91,7 +93,7 @@
     rows: 5,
     // Define the text of the picker.
     text: {
-      title: 'Pick a date / time',
+      title: 'Pick a date',
       cancel: 'Cancel',
       confirm: 'OK'
     },
@@ -1223,7 +1225,8 @@
           case 'Y':
             {
               var index = date.indexOf(digit);
-              var isBC = index > 1 && /\D/.test(date.substr(index - 2, 1)) || index === 1 && date.substr(index - 1, 1) === '-';
+              var isHyphen = date.substr(index - 1, 1) === '-';
+              var isBC = index > 1 && isHyphen && /\S/.test(date.substr(index - 2, 1)) || index === 1 && isHyphen;
               parsedDate.setFullYear(isBC ? -n : n);
               break;
             }
@@ -1474,6 +1477,11 @@
 
         options.rows = rows || 5;
         addClass(grid, rows > 1 ? "".concat(NAMESPACE, "-multiple") : "".concat(NAMESPACE, "-single"));
+
+        if (options.headers) {
+          addClass(grid, "".concat(NAMESPACE, "-headers"));
+        }
+
         var increment = options.increment;
 
         if (!isPlainObject(increment)) {
@@ -1557,6 +1565,12 @@
 
           setData(cell, 'type', type);
           setData(cell, 'token', token);
+
+          if (options.headers) {
+            var header = options.headers[type] || type[0].toUpperCase() + type.substr(1);
+            setData(cell, 'header', header);
+          }
+
           addClass(list, "".concat(NAMESPACE, "-list"));
           addClass(cell, "".concat(NAMESPACE, "-cell"));
           addClass(cell, "".concat(NAMESPACE, "-").concat(type, "s"));

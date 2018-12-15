@@ -125,19 +125,27 @@ window.onload = function () {
   // --------------------------------------------------
 
   new Picker(document.querySelector('.js-date-picker'), {
-    format: 'MM/DD/YYYY',
+    format: 'MMM D, YYYY',
   });
 
   new Picker(document.querySelector('.js-time-picker'), {
     format: 'HH:mm',
+    headers: true,
+    text: {
+      title: 'Pick a time',
+    },
   });
 
   new Picker(document.querySelector('.js-full-picker'), {
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
+    headers: true,
   });
 
   new Picker(document.querySelector('.js-month-picker'), {
     format: 'MMMM',
+    text: {
+      title: 'Pick a month',
+    },
   });
 
   new Picker(document.querySelector('.js-inline-picker'), {
@@ -157,7 +165,7 @@ window.onload = function () {
       minute: 10,
     },
     text: {
-      title: '请选择日期 / 时间',
+      title: '请选择日期',
       cancel: '取消',
       confirm: '确认',
     },
@@ -173,4 +181,8 @@ window.onload = function () {
       return Number(text) + suffixes[type];
     },
   });
+
+  if (typeof hljs !== 'undefined') {
+    hljs.initHighlightingOnLoad();
+  }
 };
