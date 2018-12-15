@@ -35,7 +35,7 @@
       '12月'
     ],
     text: {
-      title: '请选择日期/时间',
+      title: '请选择日期',
       cancel: '取消',
       confirm: '确认'
     }

@@ -161,7 +161,7 @@ Or
 
 ```js
 new Picker(element, {
-  date: 'Jul 15, 2016',
+  date: 'Oct 24, 2048',
   format: 'MMM D, YYYY',
 });
 ```
@@ -268,7 +268,7 @@ Define the number of rows for showing.
 
   ```js
   {
-    title: 'Pick a date / time',
+    title: 'Pick a date',
     cancel: 'Cancel',
     confirm: 'OK',
   }
@@ -383,7 +383,7 @@ const picker = new Picker(element, {
 });
 
 picker.getDate();
-// > Sat Oct 24 2048 05:12:00 GMT+0800 (中国标准时间)
+// > Sat Oct 24 2048 05:12:00 GMT+0800 (China Standard Time)
 
 picker.getDate(true);
 // > 2048-10-24 05:12
@@ -418,7 +418,7 @@ Parse a date string with the set date format.
 const picker = new Picker(element, options);
 
 picker.parseDate('2048-10-24 05:12');
-// > Sat Oct 24 2048 05:12:00 GMT+0800 (中国标准时间)
+// > Sat Oct 24 2048 05:12:00 GMT+0800 (China Standard Time)
 ```
 
 ### formatDate(date)

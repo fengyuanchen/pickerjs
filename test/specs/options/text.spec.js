@@ -2,7 +2,7 @@ describe('text (option)', () => {
   it('should match the given text', () => {
     const input = window.createInput();
     const text = {
-      title: '请选择日期/时间',
+      title: '请选择日期',
       cancel: '取消',
       confirm: '确认',
     };
@@ -18,7 +18,7 @@ describe('text (option)', () => {
   it('should support partial properties', () => {
     const input = window.createInput();
     const text = {
-      title: '请选择日期/时间',
+      title: '请选择日期',
     };
     const picker = new Picker(input, {
       text,

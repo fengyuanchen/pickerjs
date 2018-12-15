@@ -57,7 +57,7 @@ export default {
 
   // Define the text of the picker.
   text: {
-    title: 'Pick a date / time',
+    title: 'Pick a date',
     cancel: 'Cancel',
     confirm: 'OK',
   },
