@@ -8,6 +8,9 @@ export default {
   // The date string format, also as the sorting order for columns.
   format: 'YYYY-MM-DD HH:mm',
 
+  // Indicate whether show the column headers or customize column headers
+  headers: false,
+
   // Define the increment for each date / time part.
   increment: 1,
 

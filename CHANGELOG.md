@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 (Dec 15, 2018)
+
+- Add `headers` option for customizing the column headers (#20).
+
 ## 1.0.0 (Oct 25, 2018)
 
 - Fix wrong BC year detecting when the date string has a `-` before year digits (#17).

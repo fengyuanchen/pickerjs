@@ -1,4 +1,14 @@
 declare namespace Picker {
+  export interface HeadersOptions {
+    year?: string;
+    month?: string;
+    day?: string;
+    hour?: string;
+    minute?: string;
+    second?: string;
+    millisecond?: string;
+  }
+
   export interface IncrementOptions {
     year?: number;
     month?: number;
@@ -19,6 +29,7 @@ declare namespace Picker {
     container?: string | Element;
     date?: string | Date;
     format?: string;
+    headers?: boolean | HeadersOptions;
     hidden?(event: CustomEvent): void;
     hide?(event: CustomEvent): void;
     increment?: number | IncrementOptions;

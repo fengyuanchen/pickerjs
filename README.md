@@ -1,6 +1,6 @@
 # Picker.js
 
-[![Build Status](https://travis-ci.org/fengyuanchen/pickerjs.svg)](https://travis-ci.org/fengyuanchen/pickerjs) [![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
+[![Build Status](https://img.shields.io/travis/fengyuanchen/pickerjs.svg)](https://travis-ci.org/fengyuanchen/pickerjs) [![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
 
 > JavaScript date time picker.
 
@@ -163,6 +163,35 @@ Or
 new Picker(element, {
   date: 'Jul 15, 2016',
   format: 'MMM D, YYYY',
+});
+```
+
+### headers
+
+- Type: `Boolean` or `Object`
+- Default: `false`
+
+Indicate whether show the column headers or customize column headers.
+
+```js
+new Picker(element, {
+  headers: true,
+});
+```
+
+Or
+
+```js
+new Picker(element, {
+  headers: {
+    year: '年',
+    month: '月',
+    day: '日',
+    hour: '时',
+    minute: '分',
+    second: '秒',
+    millisecond: '毫秒',
+  },
 });
 ```
 
@@ -473,7 +502,7 @@ If you have to use other picker with the same namespace, just call the `Picker.n
 
 ## Versioning
 
-Maintained under the [Semantic Versioning guidelines](http://semver.org/).
+Maintained under the [Semantic Versioning guidelines](https://semver.org).
 
 ## License
 

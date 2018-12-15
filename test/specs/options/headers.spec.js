@@ -1,0 +1,33 @@
+describe('headers (option)', () => {
+  it('should be `false` by default', () => {
+    const input = window.createInput();
+    const picker = new Picker(input);
+
+    expect(picker.options.headers).to.be.false;
+  });
+
+  it('should show column headers', () => {
+    const input = window.createInput();
+    const picker = new Picker(input, {
+      headers: true,
+    });
+
+    expect(picker.picker.querySelector('.picker-years').dataset.header).to.equal('Year');
+    expect(picker.picker.querySelector('.picker-months').dataset.header).to.equal('Month');
+    expect(picker.picker.querySelector('.picker-days').dataset.header).to.equal('Day');
+  });
+
+  it('should show the custom column headers', () => {
+    const input = window.createInput();
+    const picker = new Picker(input, {
+      headers: {
+        year: '年',
+        month: '月',
+      },
+    });
+
+    expect(picker.picker.querySelector('.picker-years').dataset.header).to.equal('年');
+    expect(picker.picker.querySelector('.picker-months').dataset.header).to.equal('月');
+    expect(picker.picker.querySelector('.picker-days').dataset.header).to.equal('Day');
+  });
+});

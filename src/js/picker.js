@@ -122,6 +122,10 @@ class Picker {
     options.rows = rows || 5;
     addClass(grid, rows > 1 ? `${NAMESPACE}-multiple` : `${NAMESPACE}-single`);
 
+    if (options.headers) {
+      addClass(grid, `${NAMESPACE}-headers`);
+    }
+
     let { increment } = options;
 
     if (!isPlainObject(increment)) {
@@ -156,6 +160,7 @@ class Picker {
             data.max = 99;
             data.min = 0;
           }
+
           break;
 
         case 'M':
@@ -168,6 +173,7 @@ class Picker {
           } else if (data.digit === 4) {
             data.aliases = options.months;
           }
+
           break;
 
         case 'D':
@@ -200,6 +206,13 @@ class Picker {
 
       setData(cell, 'type', type);
       setData(cell, 'token', token);
+
+      if (options.headers) {
+        const header = options.headers[type] || (type[0].toUpperCase() + type.substr(1));
+
+        setData(cell, 'header', header);
+      }
+
       addClass(list, `${NAMESPACE}-list`);
       addClass(cell, `${NAMESPACE}-cell`);
       addClass(cell, `${NAMESPACE}-${type}s`);
