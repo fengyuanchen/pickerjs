@@ -293,8 +293,9 @@ export default {
         case 'YYY':
         case 'Y': {
           const index = date.indexOf(digit);
-          const isBC = (index > 1 && /\D/.test(date.substr(index - 2, 1)))
-            || (index === 1 && date.substr(index - 1, 1) === '-');
+          const isHyphen = date.substr(index - 1, 1) === '-';
+          const isBC = (index > 1 && isHyphen && /\S/.test(date.substr(index - 2, 1)))
+            || (index === 1 && isHyphen);
 
           parsedDate.setFullYear(isBC ? -n : n);
           break;
