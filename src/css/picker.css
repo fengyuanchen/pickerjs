@@ -150,12 +150,6 @@
       z-index: 1;
     }
   }
-
-  @nest .picker-single & {
-    &::after {
-      display: none;
-    }
-  }
 }
 
 .picker-list {
