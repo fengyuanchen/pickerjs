@@ -7,7 +7,7 @@
 }
 
 .picker {
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   color: var(--color);
   direction: ltr;
   display: none;
@@ -15,7 +15,7 @@
   line-height: 1.5;
   overflow: hidden;
   touch-action: none;
-  transition: opacity .15s;
+  transition: opacity 0.15s;
   user-select: none;
 }
 
@@ -33,7 +33,7 @@
     max-height: 100%;
     position: absolute;
     right: 0;
-    transition: bottom .3s;
+    transition: bottom 0.3s;
   }
 
   & .picker-header {
@@ -66,7 +66,7 @@
 .picker-header {
   border-bottom: var(--border);
   display: none;
-  padding: .875rem 1.25rem;
+  padding: 0.875rem 1.25rem;
   position: relative;
 }
 
@@ -83,7 +83,7 @@
   color: var(--gray);
   font-size: 1.75rem;
   height: 3rem;
-  opacity: .75;
+  opacity: 0.75;
   padding: 0;
   position: absolute;
   right: 0;
@@ -118,7 +118,7 @@
   position: relative;
 
   &::after {
-    background-image: linear-gradient(to top, rgba(0, 0, 0, .05), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
     border-bottom: var(--border);
     bottom: 0;
     content: '';
@@ -142,7 +142,7 @@
       content: attr(data-header);
       display: block;
       left: 0;
-      padding: .5rem;
+      padding: 0.5rem;
       position: absolute;
       right: 0;
       text-align: center;
@@ -167,7 +167,7 @@
 
 .picker-item {
   color: var(--gray);
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
   white-space: nowrap;
 }
@@ -189,7 +189,7 @@
   border-width: 0;
   display: table-cell;
   font-size: 1rem;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   width: 50%;
 
   &:focus,

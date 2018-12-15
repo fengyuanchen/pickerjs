@@ -1,7 +1,7 @@
 .carbonads {
-  border-radius: .25rem;
   border: 1px solid #ccc;
-  font-size: .875rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
   overflow: hidden;
   padding: 1rem;
 }
@@ -46,7 +46,7 @@
 }
 
 .footer {
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
 
 .heart {
@@ -79,8 +79,8 @@
 .heart::after {
   background-color: #fff;
   content: "♥";
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   position: relative;
   z-index: 1;
 }
@@ -88,7 +88,7 @@
 .docs-picker-container {
   border: 1px dashed #eee;
   display: none;
-  margin:.5rem auto;
+  margin: 0.5rem auto;
   min-height: 40px;
   position: relative;
 }
@@ -109,7 +109,7 @@
 }
 
 .docs-options .input-group {
-  margin-bottom:.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .docs-options .input-group-prepend .input-group-text {
@@ -119,19 +119,9 @@
 .docs-methods > .input-group,
 .docs-methods > .btn-group,
 .docs-methods > .btn {
-  margin-bottom: .5rem;
-}
-
-.js-super-picker-container .picker-cell {
-  width: 18%;
+  margin-bottom: 0.5rem;
 }
 
 .js-super-picker-container .picker-years {
   width: 28%;
-}
-
-pre.prettyprint {
-  border-color: #ddd !important;
-  border-radius: .25rem;
-  padding: 1rem !important;
 }
