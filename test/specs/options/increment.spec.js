@@ -8,7 +8,9 @@ describe('increment (option)', () => {
 
   it('should support number value', () => {
     const input = window.createInput();
-    const date = new Date();
+
+    // Be sure that `date.getMonth() + increment` should less than `12` and so on.
+    const date = new Date(2048, 1, 1, 1, 1, 1, 1, 1);
     const increment = 2;
     const picker = new Picker(input, {
       date,
@@ -27,7 +29,9 @@ describe('increment (option)', () => {
 
   it('should support object value', () => {
     const input = window.createInput();
-    const date = new Date();
+
+    // Be sure that `date.getMonth() + increment` should less than `12` and so on.
+    const date = new Date(2048, 1, 1, 1, 1, 1, 1, 1);
     const increment = 2;
     const picker = new Picker(input, {
       date,
