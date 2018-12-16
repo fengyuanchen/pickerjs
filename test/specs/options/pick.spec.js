@@ -17,5 +17,6 @@ describe('pick (option)', () => {
     expect(input.value).to.be.empty;
     picker.pick();
     expect(input.value).to.not.be.empty;
+    picker.destroy();
   });
 });

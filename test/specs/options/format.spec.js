@@ -283,4 +283,14 @@ describe('format (option)', () => {
     picker.setDate('11');
     expect(picker.getDate(true)).to.equal('11');
   });
+
+  it('should throw error when the format is invalid', () => {
+    const input = window.createInput();
+
+    expect(() => {
+      new Picker(input, {
+        format: '',
+      });
+    }).to.throw('Invalid format.');
+  });
 });

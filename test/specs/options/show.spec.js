@@ -16,6 +16,10 @@ describe('show (option)', () => {
       shown() {
         picker.hide();
       },
+
+      hidden() {
+        picker.destroy();
+      },
     });
 
     picker.show();
