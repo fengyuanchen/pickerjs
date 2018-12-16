@@ -168,32 +168,10 @@ new Picker(element, {
 
 ### headers
 
-- Type: `Boolean` or `Object`
+- Type: `Boolean`
 - Default: `false`
 
-Indicate whether show the column headers or customize column headers.
-
-```js
-new Picker(element, {
-  headers: true,
-});
-```
-
-Or
-
-```js
-new Picker(element, {
-  headers: {
-    year: '年',
-    month: '月',
-    day: '日',
-    hour: '时',
-    minute: '分',
-    second: '秒',
-    millisecond: '毫秒',
-  },
-});
-```
+Indicate whether show the column headers. The text content of each header is defined in the `text` option.
 
 ### increment
 
@@ -271,6 +249,13 @@ Define the number of rows for showing.
     title: 'Pick a date and time',
     cancel: 'Cancel',
     confirm: 'OK',
+    year: 'Year',
+    month: 'Month',
+    day: 'Day',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+    millisecond: 'Millisecond',
   }
   ```
 

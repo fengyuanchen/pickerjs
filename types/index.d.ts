@@ -19,7 +19,7 @@ declare namespace Picker {
     millisecond?: number;
   }
 
-  export interface TextOptions {
+  export interface TextOptions extends HeadersOptions {
     title?: string;
     cancel?: string;
     confirm?: string;

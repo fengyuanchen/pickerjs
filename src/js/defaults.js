@@ -8,7 +8,7 @@ export default {
   // The date string format, also as the sorting order for columns.
   format: 'YYYY-MM-DD HH:mm',
 
-  // Indicate whether show the column headers or customize column headers
+  // Indicate whether show the column headers.
   headers: false,
 
   // Define the increment for each date / time part.
@@ -60,6 +60,13 @@ export default {
     title: 'Pick a date and time',
     cancel: 'Cancel',
     confirm: 'OK',
+    year: 'Year',
+    month: 'Month',
+    day: 'Day',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+    millisecond: 'Millisecond',
   },
 
   // Translate date / time text.

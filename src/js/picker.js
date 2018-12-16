@@ -122,11 +122,14 @@ class Picker {
     options.rows = rows || 5;
     addClass(grid, rows > 1 ? `${NAMESPACE}-multiple` : `${NAMESPACE}-single`);
 
-    if (options.headers) {
-      addClass(grid, `${NAMESPACE}-headers`);
-    }
+    let { headers, increment } = options;
 
-    let { increment } = options;
+    if (headers) {
+      addClass(grid, `${NAMESPACE}-headers`);
+
+      // TODO: Drop the `headers` option's object support in v2.
+      headers = isPlainObject(headers) ? headers : options.text;
+    }
 
     if (!isPlainObject(increment)) {
       increment = {
@@ -207,10 +210,8 @@ class Picker {
       setData(cell, 'type', type);
       setData(cell, 'token', token);
 
-      if (options.headers) {
-        const header = options.headers[type] || (type[0].toUpperCase() + type.substr(1));
-
-        setData(cell, 'header', header);
+      if (headers) {
+        setData(cell, 'header', headers[type] || (type[0].toUpperCase() + type.substr(1)));
       }
 
       addClass(list, `${NAMESPACE}-list`);

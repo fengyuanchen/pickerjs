@@ -3,7 +3,6 @@
   typeof define === 'function' && define.amd ? define(['pickerjs'], factory) :
   (factory(global.Picker));
 }(this, (function (Picker) {
-
   'use strict';
 
   Picker.languages['en-US'] = {
