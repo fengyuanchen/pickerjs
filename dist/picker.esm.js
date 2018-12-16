@@ -1,11 +1,11 @@
 /*!
- * Picker.js v1.1.0
+ * Picker.js v1.2.0
  * https://fengyuanchen.github.io/pickerjs
  *
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2018-12-15T09:03:15.534Z
+ * Date: 2018-12-16T14:10:26.813Z
  */
 
 function _typeof(obj) {
@@ -67,11 +67,13 @@ function _nonIterableSpread() {
 var DEFAULTS = {
   // Define the container for putting the picker.
   container: null,
+  // Indicate whether show the prev and next arrow controls on each column.
+  controls: false,
   // The initial date. If not present, use the current date.
   date: null,
   // The date string format, also as the sorting order for columns.
   format: 'YYYY-MM-DD HH:mm',
-  // Indicate whether show the column headers or customize column headers
+  // Indicate whether show the column headers.
   headers: false,
   // Define the increment for each date / time part.
   increment: 1,
@@ -87,9 +89,16 @@ var DEFAULTS = {
   rows: 5,
   // Define the text of the picker.
   text: {
-    title: 'Pick a date',
+    title: 'Pick a date and time',
     cancel: 'Cancel',
-    confirm: 'OK'
+    confirm: 'OK',
+    year: 'Year',
+    month: 'Month',
+    day: 'Day',
+    hour: 'Hour',
+    minute: 'Minute',
+    second: 'Second',
+    millisecond: 'Millisecond'
   },
   // Translate date / time text.
   translate: function translate(type, text) {
@@ -103,16 +112,30 @@ var DEFAULTS = {
   pick: null
 };
 
-var TEMPLATE = '<div class="picker" data-action="hide" touch-action="none" tabindex="-1" role="dialog">' + '<div class="picker-dialog" role="document">' + '<div class="picker-header">' + '<h4 class="picker-title">{{ title }}</h4>' + '<button type="button" class="picker-close" data-action="hide" aria-label="Close">&times;</button>' + '</div>' + '<div class="picker-body">' + '<div class="picker-grid"></div>' + '</div>' + '<div class="picker-footer">' + '<button type="button" class="picker-cancel" data-action="hide">{{ cancel }}</button>' + '<button type="button" class="picker-confirm" data-action="pick">{{ confirm }}</button>' + '</div>' + '</div>' + '</div>';
+var TEMPLATE = '<div class="picker" data-picker-action="hide" touch-action="none" tabindex="-1" role="dialog">' + '<div class="picker-dialog" role="document">' + '<div class="picker-header">' + '<h4 class="picker-title">{{ title }}</h4>' + '<button type="button" class="picker-close" data-picker-action="hide" aria-label="Close">&times;</button>' + '</div>' + '<div class="picker-body">' + '<div class="picker-grid"></div>' + '</div>' + '<div class="picker-footer">' + '<button type="button" class="picker-cancel" data-picker-action="hide">{{ cancel }}</button>' + '<button type="button" class="picker-confirm" data-picker-action="pick">{{ confirm }}</button>' + '</div>' + '</div>' + '</div>';
 
-var IN_BROWSER = typeof window !== 'undefined';
-var WINDOW = IN_BROWSER ? window : {};
+var IS_BROWSER = typeof window !== 'undefined';
+var WINDOW = IS_BROWSER ? window : {};
+var IS_TOUCH_DEVICE = IS_BROWSER ? 'ontouchstart' in WINDOW.document.documentElement : false;
+var HAS_POINTER_EVENT = IS_BROWSER ? 'PointerEvent' in WINDOW : false;
 var NAMESPACE = 'picker';
-var LANGUAGES = {}; // Classes
+var LANGUAGES = {}; // Actions
+
+var ACTION_HIDE = 'hide';
+var ACTION_NEXT = 'next';
+var ACTION_PICK = 'pick';
+var ACTION_PREV = 'prev'; // Classes
 
 var CLASS_OPEN = "".concat(NAMESPACE, "-open");
 var CLASS_OPENED = "".concat(NAMESPACE, "-opened");
-var CLASS_PICKED = "".concat(NAMESPACE, "-picked"); // Events
+var CLASS_PICKED = "".concat(NAMESPACE, "-picked"); // Data keys
+// Add namespace to avoid to conflict to some other libraries.
+
+var DATA_ACTION = "".concat(NAMESPACE, "Action");
+var DATA_TOKEN = 'token';
+var DATA_TYPE = 'type';
+var DATA_NAME = 'name';
+var DATA_VALUE = 'value'; // Events
 
 var EVENT_CLICK = 'click';
 var EVENT_FOCUS = 'focus';
@@ -120,9 +143,12 @@ var EVENT_HIDDEN = 'hidden';
 var EVENT_HIDE = 'hide';
 var EVENT_KEY_DOWN = 'keydown';
 var EVENT_PICK = 'pick';
-var EVENT_POINTER_DOWN = WINDOW.PointerEvent ? 'pointerdown' : 'touchstart mousedown';
-var EVENT_POINTER_MOVE = WINDOW.PointerEvent ? 'pointermove' : 'touchmove mousemove';
-var EVENT_POINTER_UP = WINDOW.PointerEvent ? 'pointerup pointercancel' : 'touchend touchcancel mouseup';
+var EVENT_TOUCH_START = IS_TOUCH_DEVICE ? 'touchstart' : 'mousedown';
+var EVENT_TOUCH_MOVE = IS_TOUCH_DEVICE ? 'touchmove' : 'mousemove';
+var EVENT_TOUCH_END = IS_TOUCH_DEVICE ? 'touchend touchcancel' : 'mouseup';
+var EVENT_POINTER_DOWN = HAS_POINTER_EVENT ? 'pointerdown' : EVENT_TOUCH_START;
+var EVENT_POINTER_MOVE = HAS_POINTER_EVENT ? 'pointermove' : EVENT_TOUCH_MOVE;
+var EVENT_POINTER_UP = HAS_POINTER_EVENT ? 'pointerup pointercancel' : EVENT_TOUCH_END;
 var EVENT_SHOW = 'show';
 var EVENT_SHOWN = 'shown';
 var EVENT_WHEEL = 'wheel mousewheel DOMMouseScroll';
@@ -191,7 +217,7 @@ function isPlainObject(value) {
     var _constructor = value.constructor;
     var prototype = _constructor.prototype;
     return _constructor && prototype && hasOwnProperty.call(prototype, 'isPrototypeOf');
-  } catch (e) {
+  } catch (error) {
     return false;
   }
 }
@@ -391,14 +417,14 @@ function removeData(element, name) {
   if (isObject(element[name])) {
     try {
       delete element[name];
-    } catch (e) {
+    } catch (error) {
       element[name] = undefined;
     }
   } else if (element.dataset) {
     // #128 Safari not allows to delete dataset property
     try {
       delete element.dataset[name];
-    } catch (e) {
+    } catch (error) {
       element.dataset[name] = undefined;
     }
   } else {
@@ -410,7 +436,7 @@ var REGEXP_SPACES = /\s\s*/;
 var onceSupported = function () {
   var supported = false;
 
-  if (IN_BROWSER) {
+  if (IS_BROWSER) {
     var once = false;
 
     var listener = function listener() {};
@@ -606,7 +632,7 @@ function parseFormat(format) {
   var tokens = format.match(REGEXP_TOKENS);
 
   if (!tokens) {
-    throw new Error('Invalid format');
+    throw new Error('Invalid format.');
   }
 
   var result = {
@@ -690,63 +716,67 @@ var events = {
 };
 
 var handlers = {
-  focus: function focus(e) {
-    e.target.blur();
+  focus: function focus(event) {
+    event.target.blur();
     this.show();
   },
-  click: function click(e) {
-    var action = getData(e.target, 'action');
+  click: function click(event) {
+    var target = event.target;
+    var action = getData(target, DATA_ACTION);
 
-    if (action === 'hide') {
-      this.hide();
-    } else if (action === 'pick') {
-      this.pick();
+    switch (action) {
+      case ACTION_HIDE:
+        this.hide();
+        break;
+
+      case ACTION_PICK:
+        this.pick();
+        break;
+
+      case ACTION_PREV:
+      case ACTION_NEXT:
+        this[action](getData(target.parentElement, DATA_TYPE));
+        break;
+
+      default:
     }
   },
-  wheel: function wheel(e) {
-    var target = e.target;
+  wheel: function wheel(event) {
+    var target = event.target;
 
     if (target === this.grid) {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
 
-    if (target.tagName.toLowerCase() === 'li') {
-      target = target.parentNode;
+    while (target.parentElement && target.parentElement !== this.grid) {
+      target = target.parentElement;
     }
 
-    if (target.tagName.toLowerCase() === 'ul') {
-      target = target.parentNode;
-    }
+    var type = getData(target, DATA_TYPE);
 
-    var type = getData(target, 'type');
-
-    if (e.deltaY < 0) {
+    if (event.deltaY < 0) {
       this.prev(type);
     } else {
       this.next(type);
     }
   },
-  pointerdown: function pointerdown(e) {
-    var target = e.target;
+  pointerdown: function pointerdown(event) {
+    var target = event.target;
 
-    if (target === this.grid) {
+    if (target === this.grid || getData(target, DATA_ACTION)) {
       return;
     } // This line is required for preventing page scrolling in iOS browsers
 
 
-    e.preventDefault();
+    event.preventDefault();
 
-    if (target.tagName.toLowerCase() === 'li') {
-      target = target.parentNode;
+    while (target.parentElement && target.parentElement !== this.grid) {
+      target = target.parentElement;
     }
 
-    if (target.tagName.toLowerCase() === 'ul') {
-      target = target.parentNode;
-    }
-
-    var list = target.firstElementChild;
+    var list = target.querySelector(".".concat(NAMESPACE, "-list"));
     var itemHeight = list.firstElementChild.offsetHeight;
     this.cell = {
       elem: target,
@@ -754,19 +784,19 @@ var handlers = {
       moveY: 0,
       maxMoveY: itemHeight,
       minMoveY: itemHeight / 2,
-      startY: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
-      type: getData(target, 'type')
+      startY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
+      type: getData(target, DATA_TYPE)
     };
   },
-  pointermove: function pointermove(e) {
+  pointermove: function pointermove(event) {
     var cell = this.cell;
 
     if (!cell) {
       return;
     }
 
-    e.preventDefault();
-    var endY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
+    event.preventDefault();
+    var endY = event.changedTouches ? event.changedTouches[0].pageY : event.pageY;
     var moveY = cell.moveY + (endY - cell.startY);
     cell.startY = endY;
     cell.moveY = moveY;
@@ -785,14 +815,14 @@ var handlers = {
       this.next(cell.type);
     }
   },
-  pointerup: function pointerup(e) {
+  pointerup: function pointerup(event) {
     var cell = this.cell;
 
     if (!cell) {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
     cell.list.style.top = 0;
 
     if (cell.moveY >= cell.minMoveY) {
@@ -803,8 +833,8 @@ var handlers = {
 
     this.cell = null;
   },
-  keydown: function keydown(e) {
-    if (this.shown && (e.key === 'Escape' || e.keyCode === 27)) {
+  keydown: function keydown(event) {
+    if (this.shown && (event.key === 'Escape' || event.keyCode === 27)) {
       this.hide();
     }
   }
@@ -849,8 +879,8 @@ var helpers = {
       }
 
       item.textContent = options.translate(type, data.aliases ? data.aliases[newValue] : addLeadingZero(newValue + data.offset, data.digit));
-      setData(item, 'name', type);
-      setData(item, 'value', newValue);
+      setData(item, DATA_NAME, type);
+      setData(item, DATA_VALUE, newValue);
       addClass(item, "".concat(NAMESPACE, "-item"));
 
       if (position === 0) {
@@ -1056,14 +1086,14 @@ var methods = {
     var max = isFunction(data.max) ? data.max() : data.max;
     var min = isFunction(data.min) ? data.min() : data.min;
     var prev = data.item.previousElementSibling;
-    var value = Number(getData(list.firstElementChild, 'value')) - data.increment;
+    var value = Number(getData(list.firstElementChild, DATA_VALUE)) - data.increment;
 
     if (value < min) {
       value += max - min + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] : addLeadingZero(value + data.offset, token.length));
-    setData(item, 'value', value);
+    setData(item, DATA_VALUE, value);
 
     if (prev) {
       removeClass(data.item, CLASS_PICKED);
@@ -1072,7 +1102,7 @@ var methods = {
     }
 
     list.insertBefore(item, list.firstElementChild);
-    data.current = Number(getData(data.item, 'value'));
+    data.current = Number(getData(data.item, DATA_VALUE));
     this.current(type, data.current);
 
     if (this.inline && options.container) {
@@ -1096,14 +1126,14 @@ var methods = {
     var max = isFunction(data.max) ? data.max() : data.max;
     var min = isFunction(data.min) ? data.min() : data.min;
     var next = data.item.nextElementSibling;
-    var value = Number(getData(list.lastElementChild, 'value')) + data.increment;
+    var value = Number(getData(list.lastElementChild, DATA_VALUE)) + data.increment;
 
     if (value > max) {
       value -= max - min + 1;
     }
 
     item.textContent = options.translate(type, data.aliases ? data.aliases[value] : addLeadingZero(value + data.offset, token.length));
-    setData(item, 'value', value);
+    setData(item, DATA_VALUE, value);
     list.appendChild(item);
 
     if (next) {
@@ -1112,7 +1142,7 @@ var methods = {
       data.item = next;
     }
 
-    data.current = Number(getData(data.item, 'value'));
+    data.current = Number(getData(data.item, DATA_VALUE));
     this.current(type, data.current);
 
     if (this.inline && options.container) {
@@ -1470,13 +1500,20 @@ function () {
       }
 
       options.rows = rows || 5;
-      addClass(grid, rows > 1 ? "".concat(NAMESPACE, "-multiple") : "".concat(NAMESPACE, "-single"));
+      addClass(grid, "".concat(NAMESPACE, "-").concat(options.rows > 1 ? 'multiple' : 'single'));
 
-      if (options.headers) {
-        addClass(grid, "".concat(NAMESPACE, "-headers"));
+      if (options.controls) {
+        addClass(grid, "".concat(NAMESPACE, "-controls"));
       }
 
-      var increment = options.increment;
+      var headers = options.headers,
+          increment = options.increment;
+
+      if (headers) {
+        addClass(grid, "".concat(NAMESPACE, "-headers")); // TODO: Drop the `headers` option's object support in v2.
+
+        headers = isPlainObject(headers) ? headers : options.text;
+      }
 
       if (!isPlainObject(increment)) {
         increment = {
@@ -1493,6 +1530,7 @@ function () {
       this.format.tokens.forEach(function (token) {
         var type = tokenToType(token);
         var cell = document.createElement('div');
+        var cellBody = document.createElement('div');
         var list = document.createElement('ul');
         var data = {
           digit: token.length,
@@ -1557,18 +1595,39 @@ function () {
           default:
         }
 
-        setData(cell, 'type', type);
-        setData(cell, 'token', token);
+        setData(cell, DATA_TYPE, type);
+        setData(cell, DATA_TOKEN, token);
 
-        if (options.headers) {
-          var header = options.headers[type] || type[0].toUpperCase() + type.substr(1);
-          setData(cell, 'header', header);
+        if (headers) {
+          var cellHeader = document.createElement('div');
+          addClass(cellHeader, "".concat(NAMESPACE, "-cell__header"));
+          cellHeader.textContent = headers[type] || type[0].toUpperCase() + type.substr(1);
+          cell.appendChild(cellHeader);
+        }
+
+        if (options.controls) {
+          var prev = document.createElement('div');
+          addClass(prev, "".concat(NAMESPACE, "-cell__control"));
+          addClass(prev, "".concat(NAMESPACE, "-cell__control--prev"));
+          setData(prev, DATA_ACTION, ACTION_PREV);
+          cell.appendChild(prev);
         }
 
         addClass(list, "".concat(NAMESPACE, "-list"));
+        addClass(cellBody, "".concat(NAMESPACE, "-cell__body"));
         addClass(cell, "".concat(NAMESPACE, "-cell"));
         addClass(cell, "".concat(NAMESPACE, "-").concat(type, "s"));
-        cell.appendChild(list);
+        cellBody.appendChild(list);
+        cell.appendChild(cellBody);
+
+        if (options.controls) {
+          var next = document.createElement('div');
+          addClass(next, "".concat(NAMESPACE, "-cell__control"));
+          addClass(next, "".concat(NAMESPACE, "-cell__control--next"));
+          setData(next, DATA_ACTION, ACTION_NEXT);
+          cell.appendChild(next);
+        }
+
         grid.appendChild(cell);
         _this.data[type] = data;
 

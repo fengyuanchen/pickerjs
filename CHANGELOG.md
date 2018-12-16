@@ -1,6 +1,6 @@
 # Changelog
 
-## next
+## 1.2.0 (Dec 16, 2018)
 
 - Add the `controls` option.
 - Enhance the `text` option for defining the text content of the column headers.

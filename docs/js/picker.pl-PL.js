@@ -1,8 +1,7 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('pickerjs')) :
-  typeof define === 'function' && define.amd ? define(['pickerjs'], factory) :
-  (factory(global.Picker));
-}(this, (function (Picker) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) : factory(global.Picker);
+}(typeof self !== 'undefined' ? self : this, function (Picker) {
   'use strict';
 
   Picker.languages['pl-PL'] = {
@@ -40,4 +39,4 @@
       confirm: 'OK'
     }
   };
-})));
+}));
