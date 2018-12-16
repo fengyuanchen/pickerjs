@@ -268,7 +268,7 @@ Define the number of rows for showing.
 
   ```js
   {
-    title: 'Pick a date',
+    title: 'Pick a date and time',
     cancel: 'Cancel',
     confirm: 'OK',
   }

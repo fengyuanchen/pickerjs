@@ -126,6 +126,9 @@ window.onload = function () {
 
   new Picker(document.querySelector('.js-date-picker'), {
     format: 'MMM D, YYYY',
+    text: {
+      title: 'Pick a date',
+    },
   });
 
   new Picker(document.querySelector('.js-time-picker'), {
@@ -165,7 +168,7 @@ window.onload = function () {
       minute: 10,
     },
     text: {
-      title: '请选择日期',
+      title: '选择日期时间',
       cancel: '取消',
       confirm: '确认',
     },

@@ -67,7 +67,7 @@
         <h3>Demo</h3>
         <hr>
         <div class="docs-picker">
-          <input type="text" class="form-control docs-date" name="date" placeholder="Pick a date">
+          <input type="text" class="form-control docs-date" name="date" placeholder="Pick a date and time">
           <div class="docs-picker-container"></div>
         </div>
         <br>
@@ -177,6 +177,9 @@
         <h6>JavaScript</h6>
         <pre class="js"><code>new Picker(document.querySelector('.js-date-picker'), {
   format: 'MMM D, YYYY',
+  text: {
+    title: 'Pick a date',
+  },
 });</code></pre>
       </div>
     </div>
@@ -302,7 +305,7 @@
     minute: 10,
   },
   text: {
-    title: '请选择日期',
+    title: '选择日期时间',
     cancel: '取消',
     confirm: '确认',
   },
