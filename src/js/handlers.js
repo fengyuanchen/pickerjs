@@ -1,3 +1,4 @@
+import { NAMESPACE } from './constants';
 import { getData } from './utilities';
 
 export default {
@@ -6,13 +7,25 @@ export default {
     this.show();
   },
 
-  click(e) {
-    const action = getData(e.target, 'action');
+  click(event) {
+    const { target } = event;
+    const action = getData(target, 'action');
 
-    if (action === 'hide') {
-      this.hide();
-    } else if (action === 'pick') {
-      this.pick();
+    switch (action) {
+      case 'hide':
+        this.hide();
+        break;
+
+      case 'pick':
+        this.pick();
+        break;
+
+      case 'prev':
+      case 'next':
+        this[action](getData(target.parentElement, 'type'));
+        break;
+
+      default:
     }
   },
 
@@ -25,12 +38,8 @@ export default {
 
     e.preventDefault();
 
-    if (target.tagName.toLowerCase() === 'li') {
-      target = target.parentNode;
-    }
-
-    if (target.tagName.toLowerCase() === 'ul') {
-      target = target.parentNode;
+    while (target.parentElement && target.parentElement !== this.grid) {
+      target = target.parentElement;
     }
 
     const type = getData(target, 'type');
@@ -45,22 +54,18 @@ export default {
   pointerdown(e) {
     let { target } = e;
 
-    if (target === this.grid) {
+    if (target === this.grid || getData(target, 'action')) {
       return;
     }
 
     // This line is required for preventing page scrolling in iOS browsers
     e.preventDefault();
 
-    if (target.tagName.toLowerCase() === 'li') {
-      target = target.parentNode;
+    while (target.parentElement && target.parentElement !== this.grid) {
+      target = target.parentElement;
     }
 
-    if (target.tagName.toLowerCase() === 'ul') {
-      target = target.parentNode;
-    }
-
-    const list = target.firstElementChild;
+    const list = target.querySelector(`.${NAMESPACE}-list`);
     const itemHeight = list.firstElementChild.offsetHeight;
 
     this.cell = {

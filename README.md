@@ -102,6 +102,13 @@ new Picker(element, {
 });
 ```
 
+### controls
+
+- Type: `Boolean`
+- Default: `false`
+
+Indicate whether show the prev and next arrow controls on each column.
+
 ### date
 
 - Type: `Date` or `String`

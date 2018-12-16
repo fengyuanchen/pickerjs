@@ -120,7 +120,11 @@ class Picker {
     }
 
     options.rows = rows || 5;
-    addClass(grid, rows > 1 ? `${NAMESPACE}-multiple` : `${NAMESPACE}-single`);
+    addClass(grid, `${NAMESPACE}-${options.rows > 1 ? 'multiple' : 'single'}`);
+
+    if (options.controls) {
+      addClass(grid, `${NAMESPACE}-controls`);
+    }
 
     let { headers, increment } = options;
 
@@ -146,6 +150,7 @@ class Picker {
     this.format.tokens.forEach((token) => {
       const type = tokenToType(token);
       const cell = document.createElement('div');
+      const cellBody = document.createElement('div');
       const list = document.createElement('ul');
       const data = {
         digit: token.length,
@@ -211,13 +216,38 @@ class Picker {
       setData(cell, 'token', token);
 
       if (headers) {
-        setData(cell, 'header', headers[type] || (type[0].toUpperCase() + type.substr(1)));
+        const cellHeader = document.createElement('div');
+
+        addClass(cellHeader, `${NAMESPACE}-cell__header`);
+        cellHeader.textContent = headers[type] || (type[0].toUpperCase() + type.substr(1));
+        cell.appendChild(cellHeader);
+      }
+
+      if (options.controls) {
+        const prev = document.createElement('div');
+
+        addClass(prev, `${NAMESPACE}-cell__control`);
+        addClass(prev, `${NAMESPACE}-cell__control--prev`);
+        setData(prev, 'action', 'prev');
+        cell.appendChild(prev);
       }
 
       addClass(list, `${NAMESPACE}-list`);
+      addClass(cellBody, `${NAMESPACE}-cell__body`);
       addClass(cell, `${NAMESPACE}-cell`);
       addClass(cell, `${NAMESPACE}-${type}s`);
-      cell.appendChild(list);
+      cellBody.appendChild(list);
+      cell.appendChild(cellBody);
+
+      if (options.controls) {
+        const next = document.createElement('div');
+
+        addClass(next, `${NAMESPACE}-cell__control`);
+        addClass(next, `${NAMESPACE}-cell__control--next`);
+        setData(next, 'action', 'next');
+        cell.appendChild(next);
+      }
+
       grid.appendChild(cell);
       this.data[type] = data;
       this.render(type);

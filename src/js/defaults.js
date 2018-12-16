@@ -2,6 +2,9 @@ export default {
   // Define the container for putting the picker.
   container: null,
 
+  // Indicate whether show the prev and next arrow controls on each column.
+  controls: false,
+
   // The initial date. If not present, use the current date.
   date: null,
 

@@ -72,7 +72,7 @@
 
 .picker-title {
   font-size: 1.125rem;
-  font-weight: normal;
+  font-weight: 500;
   line-height: 1.25rem;
   margin: 0;
 }
@@ -81,6 +81,7 @@
   background-color: transparent;
   border-width: 0;
   color: var(--gray);
+  cursor: pointer;
   font-size: 1.75rem;
   height: 3rem;
   opacity: 0.75;
@@ -103,31 +104,36 @@
 
 .picker-grid {
   display: table;
-  margin-bottom: -2.5rem;
-  margin-top: -2.5rem;
   table-layout: fixed;
   width: 100%;
-}
-
-.picker-headers {
-  margin-top: 0;
 }
 
 .picker-cell {
   display: table-cell;
   position: relative;
 
+  &::before,
   &::after {
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
-    border-bottom: var(--border);
-    bottom: 0;
     content: '';
     display: block;
     left: 0;
     position: absolute;
     right: 0;
+    z-index: 3;
+  }
+
+  &::before {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
+    bottom: 50%;
+    margin-bottom: 1rem;
     top: 0;
-    z-index: 2;
+  }
+
+  &::after {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.05));
+    bottom: 0;
+    margin-top: 1rem;
+    top: 50%;
   }
 
   & + .picker-cell {
@@ -136,32 +142,117 @@
 
   @nest .picker-headers & {
     &::before {
-      background-color: #fff;
-      color: var(--gray);
-      content: '';
-      content: attr(data-header);
-      display: block;
-      left: 0;
-      padding: 0.5rem;
-      position: absolute;
-      right: 0;
-      text-align: center;
-      white-space: nowrap;
-      z-index: 1;
+      margin-bottom: 0;
+    }
+
+    &::after {
+      margin-top: 2rem;
+    }
+  }
+
+  @nest .picker-single:not(.picker-controls):not(.picker-headers) & {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.picker-cell__header {
+  color: var(--gray);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin: 0;
+  overflow: hidden;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-cell__control {
+  cursor: pointer;
+  height: 2rem;
+  padding: 0.25rem 0.5rem;
+  position: relative;
+  z-index: 4;
+
+  &::before {
+    border: 0 solid #ccc;
+    content: '';
+    display: block;
+    height: 0.5rem;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    width: 0.5rem;
+  }
+
+  &:hover::before {
+    border-color: var(--primary);
+  }
+}
+
+.picker-cell__control--prev {
+  &::before {
+    border-right-width: 1px;
+    border-top-width: 1px;
+    margin-top: 2px;
+  }
+}
+
+.picker-cell__control--next {
+  &::before {
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    margin-bottom: 2px;
+  }
+}
+
+.picker-cell__body {
+  overflow: hidden;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    height: 2rem;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+  }
+
+  &::before {
+    background-image: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    top: 0;
+  }
+
+  &::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    bottom: 0;
+  }
+
+  @nest .picker-single & {
+    &::before,
+    &::after {
+      display: none;
     }
   }
 }
 
 .picker-list {
   list-style: none;
-  margin: 0;
+  margin: -2rem 0;
   padding: 0;
   position: relative;
 }
 
 .picker-item {
   color: var(--gray);
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   text-align: center;
   white-space: nowrap;
 }
@@ -169,6 +260,7 @@
 .picker-picked {
   color: var(--blue);
   font-size: 1.125em;
+  line-height: 1.5rem;
 }
 
 .picker-footer {
@@ -181,6 +273,7 @@
 .picker-confirm {
   background-color: transparent;
   border-width: 0;
+  cursor: pointer;
   display: table-cell;
   font-size: 1rem;
   padding: 0.75rem 1rem;

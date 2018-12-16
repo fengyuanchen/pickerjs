@@ -76,11 +76,17 @@
         <h3>Options</h3>
         <hr>
         <div class="docs-options">
-          <ul class="list-group">
+          <ul class="list-group mb-2">
             <li class="list-group-item">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="container" name="container">
                 <label class="form-check-label" for="container">container</label>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="controls" name="controls">
+                <label class="form-check-label" for="controls">controls</label>
               </div>
             </li>
             <li class="list-group-item">
@@ -96,7 +102,6 @@
               </div>
             </li>
           </ul>
-          <hr>
           <div class="input-group">
             <span class="input-group-prepend">
               <label class="input-group-text" for="date">date</label>
@@ -217,6 +222,7 @@
 </code></pre>
         <h6>JavaScript</h6>
         <pre class="js"><code>new Picker(document.querySelector('.js-full-picker'), {
+  controls: true,
   format: 'YYYY-MM-DD HH:mm:ss.SSS',
   headers: true,
 });</code></pre>
@@ -255,6 +261,7 @@
 </code></pre>
         <h6>JavaScript</h6>
         <pre class="js"><code>new Picker(document.querySelector('.js-inline-picker'), {
+  controls: true,
   inline: true,
 });</code></pre>
       </div>

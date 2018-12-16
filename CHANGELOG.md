@@ -2,11 +2,12 @@
 
 ## next
 
+- Add the `controls` option.
 - Enhance the `text` option for defining the text content of the column headers.
 
 ## 1.1.0 (Dec 15, 2018)
 
-- Add `headers` option for customizing the column headers (#20).
+- Add the `headers` option for customizing the column headers (#20).
 
 ## 1.0.0 (Oct 25, 2018)
 

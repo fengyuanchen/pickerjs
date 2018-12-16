@@ -27,6 +27,7 @@ declare namespace Picker {
 
   export interface Options {
     container?: string | Element;
+    controls?: boolean;
     date?: string | Date;
     format?: string;
     headers?: boolean | HeadersOptions;

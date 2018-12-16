@@ -140,6 +140,7 @@ window.onload = function () {
   });
 
   new Picker(document.querySelector('.js-full-picker'), {
+    controls: true,
     format: 'YYYY-MM-DD HH:mm:ss.SSS',
     headers: true,
   });
@@ -152,6 +153,7 @@ window.onload = function () {
   });
 
   new Picker(document.querySelector('.js-inline-picker'), {
+    controls: true,
     inline: true,
   });
 
