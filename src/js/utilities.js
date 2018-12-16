@@ -1,5 +1,5 @@
 import {
-  IN_BROWSER,
+  IS_BROWSER,
   WINDOW,
 } from './constants';
 
@@ -66,7 +66,7 @@ export function isPlainObject(value) {
     const { prototype } = constructor;
 
     return constructor && prototype && hasOwnProperty.call(prototype, 'isPrototypeOf');
-  } catch (e) {
+  } catch (error) {
     return false;
   }
 }
@@ -299,14 +299,14 @@ export function removeData(element, name) {
   if (isObject(element[name])) {
     try {
       delete element[name];
-    } catch (e) {
+    } catch (error) {
       element[name] = undefined;
     }
   } else if (element.dataset) {
     // #128 Safari not allows to delete dataset property
     try {
       delete element.dataset[name];
-    } catch (e) {
+    } catch (error) {
       element.dataset[name] = undefined;
     }
   } else {
@@ -318,7 +318,7 @@ const REGEXP_SPACES = /\s\s*/;
 const onceSupported = (() => {
   let supported = false;
 
-  if (IN_BROWSER) {
+  if (IS_BROWSER) {
     let once = false;
     const listener = () => {};
     const options = Object.defineProperty({}, 'once', {
@@ -507,7 +507,7 @@ export function parseFormat(format) {
   const tokens = format.match(REGEXP_TOKENS);
 
   if (!tokens) {
-    throw new Error('Invalid format');
+    throw new Error('Invalid format.');
   }
 
   const result = {

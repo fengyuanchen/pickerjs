@@ -5,8 +5,13 @@ import handlers from './handlers';
 import helpers from './helpers';
 import methods from './methods';
 import {
+  ACTION_NEXT,
+  ACTION_PREV,
   CLASS_OPEN,
   CLASS_OPENED,
+  DATA_ACTION,
+  DATA_TOKEN,
+  DATA_TYPE,
   LANGUAGES,
   NAMESPACE,
   WINDOW,
@@ -212,8 +217,8 @@ class Picker {
         default:
       }
 
-      setData(cell, 'type', type);
-      setData(cell, 'token', token);
+      setData(cell, DATA_TYPE, type);
+      setData(cell, DATA_TOKEN, token);
 
       if (headers) {
         const cellHeader = document.createElement('div');
@@ -228,7 +233,7 @@ class Picker {
 
         addClass(prev, `${NAMESPACE}-cell__control`);
         addClass(prev, `${NAMESPACE}-cell__control--prev`);
-        setData(prev, 'action', 'prev');
+        setData(prev, DATA_ACTION, ACTION_PREV);
         cell.appendChild(prev);
       }
 
@@ -244,7 +249,7 @@ class Picker {
 
         addClass(next, `${NAMESPACE}-cell__control`);
         addClass(next, `${NAMESPACE}-cell__control--next`);
-        setData(next, 'action', 'next');
+        setData(next, DATA_ACTION, ACTION_NEXT);
         cell.appendChild(next);
       }
 

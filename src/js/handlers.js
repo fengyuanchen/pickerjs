@@ -1,65 +1,73 @@
-import { NAMESPACE } from './constants';
+import {
+  ACTION_HIDE,
+  ACTION_NEXT,
+  ACTION_PICK,
+  ACTION_PREV,
+  DATA_ACTION,
+  DATA_TYPE,
+  NAMESPACE,
+} from './constants';
 import { getData } from './utilities';
 
 export default {
-  focus(e) {
-    e.target.blur();
+  focus(event) {
+    event.target.blur();
     this.show();
   },
 
   click(event) {
     const { target } = event;
-    const action = getData(target, 'action');
+    const action = getData(target, DATA_ACTION);
 
     switch (action) {
-      case 'hide':
+      case ACTION_HIDE:
         this.hide();
         break;
 
-      case 'pick':
+      case ACTION_PICK:
         this.pick();
         break;
 
-      case 'prev':
-      case 'next':
-        this[action](getData(target.parentElement, 'type'));
+      case ACTION_PREV:
+      case ACTION_NEXT:
+        this[action](getData(target.parentElement, DATA_TYPE));
         break;
 
       default:
     }
   },
 
-  wheel(e) {
-    let { target } = e;
+  wheel(event) {
+    let { target } = event;
 
     if (target === this.grid) {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
 
     while (target.parentElement && target.parentElement !== this.grid) {
       target = target.parentElement;
     }
 
-    const type = getData(target, 'type');
+    const type = getData(target, DATA_TYPE);
 
-    if (e.deltaY < 0) {
+    if (event.deltaY < 0) {
       this.prev(type);
     } else {
       this.next(type);
     }
   },
 
-  pointerdown(e) {
-    let { target } = e;
+  pointerdown(event) {
+    let { target } = event;
 
-    if (target === this.grid || getData(target, 'action')) {
+    if (target === this.grid || getData(target, DATA_ACTION)) {
       return;
     }
 
     // This line is required for preventing page scrolling in iOS browsers
-    e.preventDefault();
+    event.preventDefault();
 
     while (target.parentElement && target.parentElement !== this.grid) {
       target = target.parentElement;
@@ -74,21 +82,21 @@ export default {
       moveY: 0,
       maxMoveY: itemHeight,
       minMoveY: itemHeight / 2,
-      startY: e.changedTouches ? e.changedTouches[0].pageY : e.pageY,
-      type: getData(target, 'type'),
+      startY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
+      type: getData(target, DATA_TYPE),
     };
   },
 
-  pointermove(e) {
+  pointermove(event) {
     const { cell } = this;
 
     if (!cell) {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
 
-    const endY = e.changedTouches ? e.changedTouches[0].pageY : e.pageY;
+    const endY = event.changedTouches ? event.changedTouches[0].pageY : event.pageY;
     const moveY = cell.moveY + (endY - cell.startY);
 
     cell.startY = endY;
@@ -109,14 +117,14 @@ export default {
     }
   },
 
-  pointerup(e) {
+  pointerup(event) {
     const { cell } = this;
 
     if (!cell) {
       return;
     }
 
-    e.preventDefault();
+    event.preventDefault();
     cell.list.style.top = 0;
 
     if (cell.moveY >= cell.minMoveY) {
@@ -128,8 +136,8 @@ export default {
     this.cell = null;
   },
 
-  keydown(e) {
-    if (this.shown && (e.key === 'Escape' || e.keyCode === 27)) {
+  keydown(event) {
+    if (this.shown && (event.key === 'Escape' || event.keyCode === 27)) {
       this.hide();
     }
   },

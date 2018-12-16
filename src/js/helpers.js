@@ -1,5 +1,7 @@
 import {
   CLASS_PICKED,
+  DATA_NAME,
+  DATA_VALUE,
   NAMESPACE,
 } from './constants';
 import {
@@ -50,8 +52,8 @@ export default {
       item.textContent = options.translate(type, data.aliases ? data.aliases[newValue]
         : addLeadingZero(newValue + data.offset, data.digit));
 
-      setData(item, 'name', type);
-      setData(item, 'value', newValue);
+      setData(item, DATA_NAME, type);
+      setData(item, DATA_VALUE, newValue);
       addClass(item, `${NAMESPACE}-item`);
 
       if (position === 0) {

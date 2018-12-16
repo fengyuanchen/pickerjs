@@ -2,6 +2,7 @@ import {
   CLASS_OPEN,
   CLASS_OPENED,
   CLASS_PICKED,
+  DATA_VALUE,
   EVENT_HIDDEN,
   EVENT_HIDE,
   EVENT_PICK,
@@ -113,7 +114,7 @@ export default {
     const max = isFunction(data.max) ? data.max() : data.max;
     const min = isFunction(data.min) ? data.min() : data.min;
     const prev = data.item.previousElementSibling;
-    let value = Number(getData(list.firstElementChild, 'value')) - data.increment;
+    let value = Number(getData(list.firstElementChild, DATA_VALUE)) - data.increment;
 
     if (value < min) {
       value += (max - min) + 1;
@@ -122,7 +123,7 @@ export default {
     item.textContent = options.translate(type, data.aliases ? data.aliases[value]
       : addLeadingZero(value + data.offset, token.length));
 
-    setData(item, 'value', value);
+    setData(item, DATA_VALUE, value);
 
     if (prev) {
       removeClass(data.item, CLASS_PICKED);
@@ -131,7 +132,7 @@ export default {
     }
 
     list.insertBefore(item, list.firstElementChild);
-    data.current = Number(getData(data.item, 'value'));
+    data.current = Number(getData(data.item, DATA_VALUE));
     this.current(type, data.current);
 
     if (this.inline && options.container) {
@@ -155,7 +156,7 @@ export default {
     const max = isFunction(data.max) ? data.max() : data.max;
     const min = isFunction(data.min) ? data.min() : data.min;
     const next = data.item.nextElementSibling;
-    let value = Number(getData(list.lastElementChild, 'value')) + data.increment;
+    let value = Number(getData(list.lastElementChild, DATA_VALUE)) + data.increment;
 
     if (value > max) {
       value -= (max - min) + 1;
@@ -164,7 +165,7 @@ export default {
     item.textContent = options.translate(type, data.aliases ? data.aliases[value]
       : addLeadingZero(value + data.offset, token.length));
 
-    setData(item, 'value', value);
+    setData(item, DATA_VALUE, value);
     list.appendChild(item);
 
     if (next) {
@@ -173,7 +174,7 @@ export default {
       data.item = next;
     }
 
-    data.current = Number(getData(data.item, 'value'));
+    data.current = Number(getData(data.item, DATA_VALUE));
     this.current(type, data.current);
 
     if (this.inline && options.container) {
