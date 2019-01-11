@@ -1,5 +1,9 @@
 # Changelog
 
+## next
+
+- Remove duplicate tokens (#22).
+
 ## 1.2.0 (Dec 16, 2018)
 
 - Add the `controls` option.

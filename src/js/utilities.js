@@ -504,11 +504,14 @@ export const REGEXP_TOKENS = /(Y|M|D|H|m|s|S)\1*/g;
  * @returns {Object} Returns parsed format data.
  */
 export function parseFormat(format) {
-  const tokens = format.match(REGEXP_TOKENS);
+  let tokens = format.match(REGEXP_TOKENS);
 
   if (!tokens) {
     throw new Error('Invalid format.');
   }
+
+  // Remove duplicate tokens (#22)
+  tokens = tokens.filter((token, index) => tokens.indexOf(token) === index);
 
   const result = {
     tokens,
