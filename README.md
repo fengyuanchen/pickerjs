@@ -1,6 +1,6 @@
 # Picker.js
 
-[![Build Status](https://img.shields.io/travis/fengyuanchen/pickerjs.svg)](https://travis-ci.org/fengyuanchen/pickerjs) [![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
+[![Build Status](https://img.shields.io/travis/fengyuanchen/pickerjs.svg)](https://travis-ci.org/fengyuanchen/pickerjs) [![Coverage Status](https://img.shields.io/codecov/c/github/fengyuanchen/pickerjs.svg)](https://codecov.io/gh/fengyuanchen/pickerjs) [![Downloads](https://img.shields.io/npm/dm/pickerjs.svg)](https://www.npmjs.com/package/pickerjs) [![Version](https://img.shields.io/npm/v/pickerjs.svg)](https://www.npmjs.com/package/pickerjs)
 
 > JavaScript date time picker.
 

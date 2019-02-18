@@ -1,18 +1,18 @@
 /*!
- * Picker.js v1.2.0
+ * Picker.js v1.2.1
  * https://fengyuanchen.github.io/pickerjs
  *
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2018-12-16T14:10:26.813Z
+ * Date: 2019-02-18T13:08:12.801Z
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  global.Picker = factory();
-}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
+  (global = global || self, global.Picker = factory());
+}(this, function () { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -639,8 +639,12 @@
 
     if (!tokens) {
       throw new Error('Invalid format.');
-    }
+    } // Remove duplicate tokens (#22)
 
+
+    tokens = tokens.filter(function (token, index) {
+      return tokens.indexOf(token) === index;
+    });
     var result = {
       tokens: tokens
     };
@@ -1229,8 +1233,7 @@
       }
 
       if (isString(date)) {
-        var groups = _toConsumableArray(options.months).concat(_toConsumableArray(options.monthsShort), ['\\d+']);
-
+        var groups = [].concat(_toConsumableArray(options.months), _toConsumableArray(options.monthsShort), ['\\d+']);
         digits = date.match(new RegExp("(".concat(groups.join('|'), ")"), 'g')); // Parse `11111111` (YYYYMMDD) to ['1111', '11', '11']
 
         if (digits && date.length === options.format.length && digits.length !== format.tokens.length) {
@@ -1571,8 +1574,9 @@
               break;
 
             case 'D':
+              // XXX: Use the latest date to calculate the max day (#23)
               data.max = function () {
-                return getDaysInMonth(date.getFullYear(), date.getMonth());
+                return getDaysInMonth(_this.date.getFullYear(), _this.date.getMonth());
               };
 
               data.min = 1;

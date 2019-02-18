@@ -1,8 +1,9 @@
 # Changelog
 
-## next
+## 1.2.1 (Feb 18, 2019)
 
 - Remove duplicate tokens (#22).
+- Use the latest date to calculate the max day (#23).
 
 ## 1.2.0 (Dec 16, 2018)
 

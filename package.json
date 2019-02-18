@@ -1,35 +1,16 @@
 {
   "name": "pickerjs",
+  "version": "1.2.1",
   "description": "JavaScript date time picker.",
-  "version": "1.2.0",
   "main": "dist/picker.common.js",
   "module": "dist/picker.esm.js",
   "browser": "dist/picker.js",
   "types": "types/index.d.ts",
   "style": "dist/picker.css",
-  "repository": "fengyuanchen/pickerjs",
-  "homepage": "https://fengyuanchen.github.io/pickerjs",
-  "license": "MIT",
-  "author": {
-    "name": "Chen Fengyuan",
-    "url": "https://chenfengyuan.com"
-  },
   "files": [
     "src",
     "dist",
     "types"
-  ],
-  "keywords": [
-    "date",
-    "time",
-    "picker",
-    "datepicker",
-    "timepicker",
-    "html",
-    "css",
-    "javascript",
-    "front-end",
-    "web"
   ],
   "scripts": {
     "build": "npm run build:css && npm run build:js",
@@ -52,6 +33,31 @@
     "watch:css": "postcss src/index.css -o docs/css/picker.css -m -w",
     "watch:js": "rollup -c -m -w"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fengyuanchen/pickerjs.git"
+  },
+  "keywords": [
+    "date",
+    "time",
+    "picker",
+    "datepicker",
+    "timepicker",
+    "html",
+    "css",
+    "javascript",
+    "front-end",
+    "web"
+  ],
+  "author": {
+    "name": "Chen Fengyuan",
+    "url": "https://chenfengyuan.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fengyuanchen/pickerjs/issues"
+  },
+  "homepage": "https://fengyuanchen.github.io/pickerjs",
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",

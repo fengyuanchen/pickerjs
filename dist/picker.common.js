@@ -1,11 +1,11 @@
 /*!
- * Picker.js v1.2.0
+ * Picker.js v1.2.1
  * https://fengyuanchen.github.io/pickerjs
  *
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2018-12-16T14:10:26.813Z
+ * Date: 2019-02-18T13:08:12.801Z
  */
 
 'use strict';
@@ -635,8 +635,12 @@ function parseFormat(format) {
 
   if (!tokens) {
     throw new Error('Invalid format.');
-  }
+  } // Remove duplicate tokens (#22)
 
+
+  tokens = tokens.filter(function (token, index) {
+    return tokens.indexOf(token) === index;
+  });
   var result = {
     tokens: tokens
   };
@@ -1225,8 +1229,7 @@ var methods = {
     }
 
     if (isString(date)) {
-      var groups = _toConsumableArray(options.months).concat(_toConsumableArray(options.monthsShort), ['\\d+']);
-
+      var groups = [].concat(_toConsumableArray(options.months), _toConsumableArray(options.monthsShort), ['\\d+']);
       digits = date.match(new RegExp("(".concat(groups.join('|'), ")"), 'g')); // Parse `11111111` (YYYYMMDD) to ['1111', '11', '11']
 
       if (digits && date.length === options.format.length && digits.length !== format.tokens.length) {
@@ -1567,8 +1570,9 @@ function () {
             break;
 
           case 'D':
+            // XXX: Use the latest date to calculate the max day (#23)
             data.max = function () {
-              return getDaysInMonth(date.getFullYear(), date.getMonth());
+              return getDaysInMonth(_this.date.getFullYear(), _this.date.getMonth());
             };
 
             data.min = 1;
