@@ -190,6 +190,7 @@ class Picker {
           break;
 
         case 'D':
+          // XXX: Use the latest date to calculate the max day (#23)
           data.max = () => getDaysInMonth(this.date.getFullYear(), this.date.getMonth());
           data.min = 1;
           break;
