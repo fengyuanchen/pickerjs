@@ -190,7 +190,7 @@ class Picker {
           break;
 
         case 'D':
-          data.max = () => getDaysInMonth(date.getFullYear(), date.getMonth());
+          data.max = () => getDaysInMonth(this.date.getFullYear(), this.date.getMonth());
           data.min = 1;
           break;
 
