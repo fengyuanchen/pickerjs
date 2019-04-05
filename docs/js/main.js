@@ -186,8 +186,4 @@ window.onload = function () {
       return Number(text) + suffixes[type];
     },
   });
-
-  if (typeof hljs !== 'undefined') {
-    hljs.initHighlightingOnLoad();
-  }
 };
