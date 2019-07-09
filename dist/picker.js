@@ -793,7 +793,7 @@
         list: list,
         moveY: 0,
         maxMoveY: itemHeight,
-        minMoveY: itemHeight / 2,
+        minMoveY: itemHeight,
         startY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
         type: getData(target, DATA_TYPE)
       };
