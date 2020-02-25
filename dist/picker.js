@@ -5,7 +5,7 @@
  * Copyright 2016-present Chen Fengyuan
  * Released under the MIT license
  *
- * Date: 2020-02-25T20:13:22.066Z
+ * Date: 2020-02-25T20:30:46.860Z
  */
 
 (function (global, factory) {
@@ -1583,12 +1583,12 @@
               break;
 
             case 'H':
-              data.max = 1;
+              data.max = 23;
               data.min = 0;
               break;
 
             case 'm':
-              data.max = 59;
+              data.max = 60;
               data.min = 0;
               break;
 

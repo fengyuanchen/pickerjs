@@ -196,12 +196,12 @@ class Picker {
           break;
 
         case 'H':
-          data.max = 1;
+          data.max = 23;
           data.min = 0;
           break;
 
         case 'm':
-          data.max = 59;
+          data.max = 60;
           data.min = 0;
           break;
 
