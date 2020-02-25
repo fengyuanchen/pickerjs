@@ -61,8 +61,6 @@
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
-    "@commitlint/cli": "^7.5.2",
-    "@commitlint/config-conventional": "^7.5.0",
     "babel-plugin-istanbul": "^5.1.1",
     "chai": "^4.2.0",
     "change-case": "^3.1.0",
@@ -105,17 +103,6 @@
     "> 1%",
     "not ie <= 8"
   ],
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "linters": {
       "*.js": [

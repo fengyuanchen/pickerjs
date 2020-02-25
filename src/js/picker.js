@@ -196,7 +196,7 @@ class Picker {
           break;
 
         case 'H':
-          data.max = 23;
+          data.max = 1;
           data.min = 0;
           break;
 
