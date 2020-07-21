@@ -85,6 +85,8 @@
     increment: 1,
     // Enable inline mode.
     inline: false,
+    // Stops scrolling immediately (no lazy scrolling)
+    stopScrollingImmediately: false,
     // Define the language. (An ISO language code).
     language: '',
     // Months' name.
@@ -788,12 +790,18 @@
 
       var list = target.querySelector(".".concat(NAMESPACE, "-list"));
       var itemHeight = list.firstElementChild.offsetHeight;
+      var maxMoveYHeight = itemHeight;
+      var minMoveYHeight = itemHeight/2;
+      if(stopScrollingImmediately) {
+        minMoveYHeight = itemHeight;
+      }
+
       this.cell = {
         elem: target,
         list: list,
         moveY: 0,
-        maxMoveY: itemHeight,
-        minMoveY: itemHeight / 2,
+        maxMoveY: maxMoveYHeight,
+        minMoveY: minMoveYHeight,
         startY: event.changedTouches ? event.changedTouches[0].pageY : event.pageY,
         type: getData(target, DATA_TYPE)
       };
